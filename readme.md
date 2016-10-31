@@ -5,15 +5,14 @@ At this stage it's a proof of concept and the package is not fully working...
  
 ## Installation
 
-```
+```bash
 composer require akibatech/laravel-crudable --dev
 ```
 
 Then register the service provider in your `config/app.php`.
-```
-...
+```php
+// After other service providers
 Akibatech\Crud\CrudServiceProvider::class
-...
 ```
 
 ## Usage
@@ -21,7 +20,7 @@ Akibatech\Crud\CrudServiceProvider::class
 **More doc is coming**
 
 Example model
-```
+```php
 class Post extends Model
 {
     use Akibatech\Crud\Crudable;
@@ -38,11 +37,11 @@ class Post extends Model
 ```
 
 Shows the table (on a model collection):
-```
+```blade
 {!! $posts->table() !!}
 ```
 
 Shows an edit form:
-```
+```blade
 {!! $post->crud()->form() !!}
 ```
