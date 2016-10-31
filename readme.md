@@ -50,5 +50,5 @@ Shows an edit form:
 
 Here's some screenshots of the current example.
 
-![Entry table](https://github.com/AkibaTech/laravel-crudable/screenshot-table.png)
-![Entry form](https://github.com/AkibaTech/laravel-crudable/screenshot-form.png)
+![Entry table](https://github.com/AkibaTech/laravel-crudable/blob/master/screenshot-table.png)
+![Entry form](https://github.com/AkibaTech/laravel-crudable/blob/master/screenshot-form.png)
