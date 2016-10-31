@@ -1,6 +1,6 @@
 {
-    "name": "akibatech/crud",
-    "description": "A CRUD scaffolding for Laravel",
+    "name": "akibatech/laravel-crudable",
+    "description": "Laravel CRUD builder with ease",
     "keywords": ["laravel", "crud", "fields"],
     "license": "MIT",
     "type": "plugin",
@@ -10,7 +10,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Crud\\": "crud/src/"
+            "Akibatech\\Crud\\": "src/"
         }
     },
     "config": {
