@@ -1,0 +1,19 @@
+{
+    "name": "akibatech/crud",
+    "description": "A CRUD scaffolding for Laravel",
+    "keywords": ["laravel", "crud", "fields"],
+    "license": "MIT",
+    "type": "plugin",
+    "require": {
+        "php": ">=5.6.4",
+        "laravel/framework": "5.2.*|5.3.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Crud\\": "crud/src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}
