@@ -45,3 +45,10 @@ Shows an edit form:
 ```blade
 {!! $post->crud()->form() !!}
 ```
+
+## Screenshots
+
+Here's some screenshots of the current example.
+
+![Entry table](https://github.com/AkibaTech/laravel-crudable/screenshot-table.png)
+![Entry form](https://github.com/AkibaTech/laravel-crudable/screenshot-form.png)
