@@ -1,7 +1,10 @@
-<h1>Entries list</h1>
+<h1>{{ $title }}</h1>
 
 @if($items->isEmpty() === false)
-    <p>{{ trans_choice('crud::table.count_results', $items->count()) }}</p>
+    <p>
+        {{ trans_choice('crud::table.count_results', $items->count()) }}<br>
+        <a href="{{ $create_url }}" class="btn btn-primary btn-xs">{{ trans('crud::buttons.create') }}</a>
+    </p>
 
     <table class="table table-striped">
         <thead>
@@ -19,5 +22,10 @@
         </tbody>
     </table>
 @else
-    <p>{{ trans_choice('crud::table.count_results', 0) }}</p>
+    <div class="alert alert-info">
+        <p class="text-center">
+            {{ trans_choice('crud::table.count_results', 0) }}<br>
+            <a href="{{ $create_url }}" class="btn btn-primary btn-xs">{{ trans('crud::buttons.create') }}</a>
+        </p>
+    </div>
 @endif

@@ -74,4 +74,15 @@ trait Crudable
 
         return new CrudCollection($models);
     }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * @param   void
+     * @return  static
+     */
+    public static function crudRoutes()
+    {
+        $routes = (new static)->getCrudManager()->registerRoutes();
+    }
 }

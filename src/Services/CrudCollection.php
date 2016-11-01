@@ -56,8 +56,24 @@ class CrudCollection extends Collection
      */
     public function table()
     {
-        $view = view()->make('crud::table')->with(['items' => $this, 'fields' => $this->fields]);
+        $view = view()->make('crud::table')->with([
+            'create_url' => $this->getManager()->getActionRoute('create'),
+            'title'      => trans('crud::table.title', ['name' => $this->getManager()->getPluralizedName()]),
+            'items'      => $this,
+            'fields'     => $this->fields
+        ]);
 
         return $view->render();
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * @param   void
+     * @return  CrudManager|null
+     */
+    public function getManager()
+    {
+        return $this->manager;
     }
 }

@@ -25,6 +25,11 @@ class CrudEntry
      */
     protected $model;
 
+    /**
+     * @var CrudManager
+     */
+    protected $manager;
+
     //-------------------------------------------------------------------------
 
     /**
@@ -38,6 +43,7 @@ class CrudEntry
         if (in_array(Crudable::class, class_uses($model)))
         {
             $this->model = $model;
+            $this->manager = $model->getCrudManager()->setEntry($this);
             $this->fields = clone $model->getCrudFields();
 
             if ($this->fields->count() === 0)
@@ -86,14 +92,14 @@ class CrudEntry
     //-------------------------------------------------------------------------
 
     /**
-     * Get the entry's model.
+     * Get the entry ID.
      *
      * @param   void
-     * @return  Crudable|Model
+     * @return  int|mixed
      */
-    public function getModel()
+    public function getId()
     {
-        return $this->model;
+        return $this->model->getAttribute($this->model->getKeyName());
     }
 
     //-------------------------------------------------------------------------
@@ -108,17 +114,18 @@ class CrudEntry
             [
                 'value' => trans('crud::buttons.edit'),
                 'class' => 'btn btn-primary btn-xs',
-                'uri'   => 'edit/' . $this->model->id
+                'uri'   => $this->manager->getActionRoute('edit')
             ],
             [
-                'value' => trans('crud::buttons.delete'),
+                'value' => trans('crud::buttons.destroy'),
                 'class' => 'btn btn-danger btn-xs',
-                'uri'   => 'delete/' . $this->model->id . '/' . csrf_token()
+                'uri'   => $this->manager->getActionRoute('destroy')
             ],
         ];
 
         $view = view()->make('crud::row')->with([
-            'entry' => $this,
+            'entry'   => $this,
+            'manager' => $this->manager,
             'actions' => $actions
         ]);
 
@@ -133,11 +140,41 @@ class CrudEntry
      */
     public function form()
     {
-        $view = view()->make('crud::form')->with([
-            'entry' => $this
+        $is_new = !$this->getModel()->exist;
+        $name = $this->getManager()->getName();
+        $view_name = $is_new ? 'crud::form-update' : 'crud::form-create';
+
+        $view = view()->make($view_name)->with([
+            'title' => $is_new ? trans('crud::form.create_title', ['name' => $name]) : trans('crud::form.update_title', ['name' => $name]),
+            'entry'   => $this,
+            'manager' => $this->manager,
         ]);
 
         return $view->render();
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * Get the entry's model.
+     *
+     * @param   void
+     * @return  Crudable|Model
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * @param   void
+     * @return  CrudManager
+     */
+    public function getManager()
+    {
+        return $this->manager;
     }
 
     //-------------------------------------------------------------------------
