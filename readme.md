@@ -5,6 +5,7 @@ At this stage it's a proof of concept and the package is not fully working...
  
 ## Installation
 
+Install via composer:
 ```bash
 composer require akibatech/laravel-crudable --dev
 ```
@@ -13,6 +14,11 @@ Then register the service provider in your `config/app.php`.
 ```php
 // After other service providers
 Akibatech\Crud\CrudServiceProvider::class
+```
+
+Finally, publish resources:
+```bash
+php artisan vendor:publish --tag=crud
 ```
 
 ## Usage

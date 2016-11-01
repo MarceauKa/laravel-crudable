@@ -1,7 +1,7 @@
 <h1>Posts list</h1>
 
 @if($items->isEmpty() === false)
-    <p>There's {{ $items->count() }} entries.</p>
+    <p>{{ trans_choice('crud::table.count_results', $items->count()) }}</p>
 
     <table class="table table-striped">
         <thead>
@@ -19,5 +19,5 @@
         </tbody>
     </table>
 @else
-    <p>There's no items.</p>
+    <p>{{ trans_choice('crud::table.count_results', 0) }}</p>
 @endif

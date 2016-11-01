@@ -5,6 +5,6 @@
         {!! $field->form() !!}
     @endforeach
     <hr>
-    <a href="#" class="btn btn-default">Back</a>
-    <button class="btn btn-primary">Save</button>
+    <a href="#" class="btn btn-default">{{ trans('crud::buttons.back') }}</a>
+    <button class="btn btn-primary">{{ trans('crud::buttons.save') }}</button>
 </form>

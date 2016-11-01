@@ -104,12 +104,12 @@ class CrudEntry
     {
         $actions = [
             [
-                'value' => 'Edit',
+                'value' => trans('crud::buttons.edit'),
                 'class' => 'btn btn-primary btn-xs',
                 'uri'   => 'edit/' . $this->model->id
             ],
             [
-                'value' => 'Delete',
+                'value' => trans('crud::buttons.delete'),
                 'class' => 'btn btn-danger btn-xs',
                 'uri'   => 'delete/' . $this->model->id . '/' . csrf_token()
             ],
