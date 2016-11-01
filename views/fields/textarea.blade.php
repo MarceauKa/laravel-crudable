@@ -1,4 +1,4 @@
 <div class="form-group">
-    <label for="#">Textarea</label>
-    <textarea name="" id="" class="form-control" style="max-width: 100%;">{{ $field->getValue() }}</textarea>
+    <label for="{{ $id }}">{{ $label }}</label>
+    <textarea name="{{ $name }}" id="{{ $id }}" class="form-control" style="max-width: 100%;">{{ $value }}</textarea>
 </div>

@@ -66,17 +66,6 @@ abstract class Field
     //-------------------------------------------------------------------------
 
     /**
-     * @param   void
-     * @return  mixed
-     */
-    public function getValue()
-    {
-        return $this->entry->getModel()->getAttributeValue($this->identifier);
-    }
-
-    //-------------------------------------------------------------------------
-
-    /**
      * @param   string $name
      * @return  self
      */
@@ -86,6 +75,33 @@ abstract class Field
 
         return $this;
     }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * @param   void
+     * @return  string
+     */
+    public function form()
+    {
+        $view = view()->make($this->getViewName())->with([
+            'field' => $this,
+            'label' => $this->getLabel(),
+            'name'  => $this->identifier,
+            'id'    => 'field-' . $this->identifier,
+            'value' => $this->getValue()
+        ]);
+
+        return $view->render();
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * @param   void
+     * @return  string
+     */
+    abstract public function getViewName();
 
     //-------------------------------------------------------------------------
 
@@ -109,22 +125,10 @@ abstract class Field
 
     /**
      * @param   void
-     * @return  string
+     * @return  mixed
      */
-    abstract public function getViewName();
-
-    //-------------------------------------------------------------------------
-
-    /**
-     * @param   void
-     * @return  string
-     */
-    public function form()
+    public function getValue()
     {
-        $view = view()->make($this->getViewName())->with([
-            'field' => $this
-        ]);
-
-        return $view->render();
+        return $this->entry->getModel()->getAttributeValue($this->identifier);
     }
 }
