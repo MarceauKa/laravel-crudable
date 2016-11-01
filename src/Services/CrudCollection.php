@@ -2,7 +2,6 @@
 
 namespace Akibatech\Crud\Services;
 
-use Akibatech\Crud\Fields\Field;
 use Akibatech\Crud\Traits\Crudable;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -14,9 +13,14 @@ use Illuminate\Database\Eloquent\Collection;
 class CrudCollection extends Collection
 {
     /**
-     * @var Field[]
+     * @var null|CrudManager
      */
-    protected $fields = [];
+    protected $manager;
+
+    /**
+     * @var CrudFields
+     */
+    protected $fields;
 
     //-------------------------------------------------------------------------
 
@@ -30,12 +34,25 @@ class CrudCollection extends Collection
         parent::__construct($items);
 
         $this->fields = $this->first()->getCrudFields();
+        $this->manager = $this->first()->getCrudManager();
     }
 
     //-------------------------------------------------------------------------
 
     /**
-     *
+     * @param   void
+     * @return  CrudFields
+     */
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * @param   void
+     * @return  string
      */
     public function table()
     {

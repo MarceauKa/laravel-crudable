@@ -1,7 +1,7 @@
 <h2>Entry edit</h2>
 <form action="" method="POST">
     {!! csrf_field() !!}
-    @foreach($entry->loopFields() as $field)
+    @foreach($entry->fields() as $field)
         {!! $field->form() !!}
     @endforeach
     <hr>

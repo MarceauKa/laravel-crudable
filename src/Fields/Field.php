@@ -20,7 +20,7 @@ abstract class Field
     /**
      * @var string
      */
-    protected $key;
+    protected $identifier;
 
     /**
      * @var string
@@ -32,11 +32,22 @@ abstract class Field
     /**
      * Field constructor.
      *
-     * @param   string $key
+     * @param   string $identifier
      */
-    public function __construct($key)
+    public function __construct($identifier)
     {
-        $this->key = $key;
+        $this->identifier = $identifier;
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * @param   void
+     * @return  string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
     }
 
     //-------------------------------------------------------------------------
@@ -60,7 +71,7 @@ abstract class Field
      */
     public function getValue()
     {
-        return $this->entry->getModel()->getAttributeValue($this->key);
+        return $this->entry->getModel()->getAttributeValue($this->identifier);
     }
 
     //-------------------------------------------------------------------------
@@ -88,7 +99,7 @@ abstract class Field
     {
         if (empty($this->label))
         {
-            return title_case($this->key);
+            return title_case($this->identifier);
         }
 
         return $this->label;

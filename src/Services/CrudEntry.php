@@ -2,6 +2,8 @@
 
 namespace Akibatech\Crud\Services;
 
+use Akibatech\Crud\Exceptions\InvalidModelException;
+use Akibatech\Crud\Exceptions\NoFieldsException;
 use Akibatech\Crud\Fields\Field;
 use Akibatech\Crud\Traits\Crudable;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +18,7 @@ class CrudEntry
     /**
      * @var Field[]
      */
-    protected $fields = [];
+    public $fields = [];
 
     /**
      * @var Crudable|Model
@@ -36,18 +38,48 @@ class CrudEntry
         if (in_array(Crudable::class, class_uses($model)))
         {
             $this->model = $model;
-            $this->fields = $model->getCrudFields();
+            $this->fields = clone $model->getCrudFields();
 
-            if (empty($this->fields))
+            if ($this->fields->count() === 0)
             {
-                throw new \RuntimeException("Given model has not crud fields.");
+                throw new NoFieldsException(get_class($model) . ' has no fields.');
             }
 
             $this->hydrateFields();
         }
         else
         {
-            throw new \InvalidArgumentException("The model must use Crudable trait.");
+            throw new InvalidModelException("The model must use Crudable trait.");
+        }
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * @param   void
+     * @return  self
+     */
+    public function hydrateFields()
+    {
+        foreach ($this->fields as &$field)
+        {
+            $field->setEntry($this);
+        }
+
+        return $this;
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * @param   void
+     * @return  \Generator
+     */
+    public function fields()
+    {
+        foreach ($this->fields->loop() as $field)
+        {
+            yield $field->setEntry($this);
         }
     }
 
@@ -62,36 +94,6 @@ class CrudEntry
     public function getModel()
     {
         return $this->model;
-    }
-
-    //-------------------------------------------------------------------------
-
-    /**
-     * @param   void
-     * @return  \Generator
-     */
-    public function loopFields()
-    {
-        foreach ($this->fields as $field)
-        {
-            yield $field;
-        }
-    }
-
-    //-------------------------------------------------------------------------
-
-    /**
-     * @param   void
-     * @return  self
-     */
-    protected function hydrateFields()
-    {
-        foreach ($this->fields as $field)
-        {
-            $field->setEntry($this);
-        }
-
-        return $this;
     }
 
     //-------------------------------------------------------------------------
@@ -116,8 +118,7 @@ class CrudEntry
         ];
 
         $view = view()->make('crud::row')->with([
-            'item' => $this->model,
-            'fields' => $this->fields,
+            'entry' => $this,
             'actions' => $actions
         ]);
 
@@ -137,5 +138,21 @@ class CrudEntry
         ]);
 
         return $view->render();
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * @param   string $name
+     * @return  Field|null
+     */
+    public function __get($name)
+    {
+        if ($this->fields->has($name))
+        {
+            return $this->fields->get($name)->setEntry($this);
+        }
+
+        return null;
     }
 }

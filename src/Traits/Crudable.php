@@ -4,6 +4,8 @@ namespace Akibatech\Crud\Traits;
 
 use Akibatech\Crud\Services\CrudCollection;
 use Akibatech\Crud\Services\CrudEntry;
+use Akibatech\Crud\Services\CrudFields;
+use Akibatech\Crud\Services\CrudManager;
 
 /**
  * Class Crudable
@@ -41,9 +43,19 @@ trait Crudable
      * Returns model fields configuration.
      *
      * @param   void
-     * @return  array
+     * @return  CrudFields
      */
     abstract public function getCrudFields();
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * Returns the CRUD configuration.
+     *
+     * @param   void
+     * @return  CrudManager
+     */
+    abstract public function getCrudManager();
 
     //-------------------------------------------------------------------------
 
