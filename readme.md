@@ -21,6 +21,8 @@ Finally, publish resources:
 php artisan vendor:publish --tag=crud
 ```
 
+This command will publish language files and views for easy customization.
+
 ## Usage
 
 **More doc is coming**
@@ -34,21 +36,13 @@ use Akibatech\Crud\Fields\TextField;
 use Akibatech\Crud\Services\CrudFields;
 use Akibatech\Crud\Services\CrudManager;
 use Akibatech\Crud\Traits\Crudable;
+use App\Http\Controllers\PostsController;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class Post
- *
- * @package App
- */
 class Post extends Model
 {
     use Crudable;
 
-    /**
-     * @param   void
-     * @return  CrudFields
-     */
     public function getCrudFields()
     {
         $fields = [
@@ -60,15 +54,16 @@ class Post extends Model
         return (new CrudFields())->add($fields);
     }
 
-    /**
-     * @param   void
-     * @return  CrudManager
-     */
     public function getCrudManager()
     {
-        return new CrudManager();
+        return (new CrudManager())
+            ->setController(PostsController::class)
+            ->setNamePrefix('posts')
+            ->setUriPrefix('crud/posts')
+            ->setName('Post');
     }
 }
+
 ```
 
 Shows the table (on a model collection):
