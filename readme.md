@@ -2,6 +2,20 @@
 
 Laravel Crudable is a library built to bring CRUD functionnalities to your Eloquent models.
 At this stage it's a proof of concept and the package is not fully working...
+
+## Goals
+
+- Easy to integrate on a **new project**
+- Easy to integrate to an **existing project**
+- Non-intrusive API (just add a trait and 2 methods on your model)
+- Focus on fields
+- Customizable
+- Laravel's way
+
+### Non-goals
+
+- Roles or permissions
+- Admin panel
  
 ## Installation
 
