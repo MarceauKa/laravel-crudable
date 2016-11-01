@@ -27,17 +27,46 @@ php artisan vendor:publish --tag=crud
 
 Example model
 ```php
+namespace App;
+
+use Akibatech\Crud\Fields\TextareaField;
+use Akibatech\Crud\Fields\TextField;
+use Akibatech\Crud\Services\CrudFields;
+use Akibatech\Crud\Services\CrudManager;
+use Akibatech\Crud\Traits\Crudable;
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * Class Post
+ *
+ * @package App
+ */
 class Post extends Model
 {
-    use Akibatech\Crud\Crudable;
+    use Crudable;
 
+    /**
+     * @param   void
+     * @return  CrudFields
+     */
     public function getCrudFields()
     {
-        return [
+        $fields = [
             new TextField('title'),
             new TextareaField('introduction'),
             new TextareaField('content')
         ];
+
+        return (new CrudFields())->add($fields);
+    }
+
+    /**
+     * @param   void
+     * @return  CrudManager
+     */
+    public function getCrudManager()
+    {
+        return new CrudManager();
     }
 }
 ```
