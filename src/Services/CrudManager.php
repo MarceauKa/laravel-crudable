@@ -72,7 +72,7 @@ class CrudManager
         ],
         'update'  => [
             'method' => 'PUT',
-            'uri'    => 'update',
+            'uri'    => 'update/{id}',
             'as'     => 'update',
             'action' => 'update'
         ],
@@ -218,7 +218,7 @@ class CrudManager
                 $params = [$this->entry->getId()];
             }
 
-            return route($name, $params);
+            return empty($params) ? route($name) : route($name, $params);
         }
 
         throw new InvalidRouteIdentifierException("$identifier route identifier not found.");

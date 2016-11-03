@@ -3,6 +3,7 @@
 namespace Akibatech\Crud\Services;
 
 use Akibatech\Crud\Exceptions\DuplicateFieldIdentifierException;
+use Akibatech\Crud\Exceptions\NoFieldsException;
 use Akibatech\Crud\Fields\Field;
 
 /**
@@ -17,7 +18,30 @@ class CrudFields
      */
     protected $fields = [];
 
-    //-------------------------------------------------------------------------
+    /**
+     * @var CrudEntry
+     */
+    protected $entry;
+
+    /**
+     * @param   CrudEntry $entry
+     * @return  self
+     */
+    public function setEntry(CrudEntry $entry)
+    {
+        $this->entry = $entry;
+
+        return $this;
+    }
+
+    /**
+     * @param   void
+     * @return  CrudEntry
+     */
+    public function getEntry()
+    {
+        return $this->entry;
+    }
 
     /**
      * @param   Field[] $fields
@@ -38,8 +62,6 @@ class CrudFields
         return $this;
     }
 
-    //-------------------------------------------------------------------------
-
     /**
      * @param   string $identifier
      * @param   Field $field
@@ -55,12 +77,11 @@ class CrudFields
             throw new DuplicateFieldIdentifierException("$identifier was already set.");
         }
 
+        $field->setFields($this);
         $this->fields[$identifier] = $field;
 
         return $this;
     }
-
-    //-------------------------------------------------------------------------
 
     /**
      * @param   void
@@ -71,8 +92,6 @@ class CrudFields
         return count($this->fields);
     }
 
-    //-------------------------------------------------------------------------
-
     /**
      * @param   string $identifier
      * @return  bool
@@ -81,8 +100,6 @@ class CrudFields
     {
         return array_key_exists($identifier, $this->fields) === true;
     }
-
-    //-------------------------------------------------------------------------
 
     /**
      * @param   null|string $identifier
@@ -103,8 +120,6 @@ class CrudFields
         return null;
     }
 
-    //-------------------------------------------------------------------------
-
     /**
      * @param   void
      * @return  \Generator
@@ -116,8 +131,6 @@ class CrudFields
             yield $field->getLabel();
         }
     }
-
-    //-------------------------------------------------------------------------
 
     /**
      * @param   void
@@ -131,5 +144,67 @@ class CrudFields
         }
     }
 
-    //-------------------------------------------------------------------------
+    /**
+     * Returns all fields keys.
+     *
+     * @param   void
+     * @return  array
+     */
+    public function keys()
+    {
+        return array_keys($this->fields);
+    }
+
+    /**
+     * Gets fields validation rules.
+     *
+     * @param   void
+     * @return  array
+     * @throws  NoFieldsException
+     */
+    public function validationRules()
+    {
+        $rules = [];
+
+        if ($this->count() === 0)
+        {
+            throw new NoFieldsException();
+        }
+
+        foreach ($this->fields as $key => $field)
+        {
+            $field_rules = $field->getRules();
+
+            if (!empty($field_rules))
+            {
+                $rules[$key] = $field_rules;
+            }
+        }
+
+        return $rules;
+    }
+
+    /**
+     * Hydrate fields with new data.
+     *
+     * @param   array $data
+     * @return  self
+     */
+    public function hydrateFormData(array $data)
+    {
+        if (count($data) === 0)
+        {
+            return $this;
+        }
+
+        foreach ($this->fields as $field)
+        {
+            if (array_key_exists($field->getIdentifier(), $data))
+            {
+                $field->newValue($data[$field->getIdentifier()]);
+            }
+        }
+
+        return $this;
+    }
 }

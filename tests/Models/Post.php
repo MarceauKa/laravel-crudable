@@ -28,9 +28,9 @@ class Post extends Model
     public function getCrudFields()
     {
         $fields = [
-            new TextField('title'),
-            new TextareaField('introduction'),
-            new TextareaField('content')
+            new TextField('title', 'required|min:3'),
+            new TextareaField('introduction', 'required|min:3'),
+            new TextareaField('content', 'required|min:3')
         ];
 
         return (new CrudFields())->add($fields);
