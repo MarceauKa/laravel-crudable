@@ -45,14 +45,11 @@ This command will publish language files and views for easy customization.
 
 Example model
 ```php
-namespace App;
-
 use Akibatech\Crud\Fields\TextareaField;
 use Akibatech\Crud\Fields\TextField;
 use Akibatech\Crud\Services\CrudFields;
 use Akibatech\Crud\Services\CrudManager;
 use Akibatech\Crud\Traits\Crudable;
-use App\Http\Controllers\PostsController;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -61,25 +58,22 @@ class Post extends Model
 
     public function getCrudFields()
     {
-        $fields = [
-            new TextField('title'),
-            new TextareaField('introduction'),
-            new TextareaField('content')
-        ];
-
-        return (new CrudFields())->add($fields);
+        return (new CrudFields())
+            ->add([
+                new TextField('title', 'required|min:3'),
+                new TextareaField('introduction', 'required|min:3'),
+                new TextareaField('content', 'required|min:3')
+            ]);
     }
 
     public function getCrudManager()
     {
         return (new CrudManager())
-            ->setController(PostsController::class)
             ->setNamePrefix('posts')
             ->setUriPrefix('crud/posts')
             ->setName('Post');
     }
 }
-
 ```
 
 Shows the table (on a model collection):
@@ -92,12 +86,70 @@ Shows an edit form:
 {!! $post->crud()->form() !!}
 ```
 
+## Validating
+
+**More doc is coming**
+
+Validating data is pretty simple.
+
+Here's an example for creation:
+```
+public function create()
+{
+    $post = new App\Post();
+    $validator = $post->crud()->validate($request->only(['title', 'introduction', 'content']));
+    
+    if ($validator->passes()) {
+        $validator->save();
+    }
+    
+    return $validator->redirect();
+}
+``
+
+## Fields
+
+**More doc is coming**
+
+### Implemented
+
+Actually there's 2 fields implemented:
+- TextField: A basic text input
+- TextareaField: A basic textarea input
+
+### WIP
+
+More fields are in progress:
+- CheckboxField
+- RadioField
+- PasswordField
+- RangeField
+- NumberField
+- GoogleMapField
+- FileField
+- MultiFileField
+- DropzoneField
+- TwitterField
+- UrlField
+- ImageField
+- MarkdownField
+- WysiwygField
+- ...and many more
+
 ## Screenshots
 
-Here's some screenshots of the current example.
+Here's some screenshots of the current example (with the default Bootstrap configuration).
 
 Entry table:
 ![Entry table](https://github.com/AkibaTech/laravel-crudable/blob/master/screenshot-table.png)
 
 Entry form:
 ![Entry form](https://github.com/AkibaTech/laravel-crudable/blob/master/screenshot-form.png)
+
+## Tests
+
+You can launch tests with
+```bash
+vendor/bin/phpunit
+```
+
