@@ -93,7 +93,7 @@ Shows an edit form:
 Validating data is pretty simple.
 
 Here's an example for creation:
-```
+```php
 public function create()
 {
     $post = new App\Post();
@@ -105,7 +105,7 @@ public function create()
     
     return $validator->redirect();
 }
-``
+```
 
 ## Fields
 
