@@ -5,6 +5,8 @@ namespace Akibatech\Crud\Services;
 use Akibatech\Crud\Exceptions\DuplicateFieldIdentifierException;
 use Akibatech\Crud\Exceptions\NoFieldsException;
 use Akibatech\Crud\Fields\Field;
+use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 /**
  * Class CrudFields
@@ -22,6 +24,16 @@ class CrudFields
      * @var CrudEntry
      */
     protected $entry;
+
+    /**
+     * @var MessageBag
+     */
+    protected $errors;
+
+    /**
+     * @var MessageBag
+     */
+    protected $old_input;
 
     /**
      * Make staticly a new instance.
@@ -214,6 +226,82 @@ class CrudFields
             {
                 $field->newValue($data[$field->getIdentifier()]);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param   void
+     * @return  MessageBag
+     */
+    public function getErrors()
+    {
+        if (is_null($this->errors))
+        {
+            $this->errors = new MessageBag();
+        }
+
+        return $this->errors;
+    }
+
+    /**
+     * @param   void
+     * @return  MessageBag
+     */
+    public function getOldInput()
+    {
+        if (is_null($this->old_input))
+        {
+            $this->old_input = new MessageBag();
+        }
+
+        return $this->old_input;
+    }
+
+    /**
+     * Hydrates the instance with previous validation errors.
+     *
+     * @param   MessageBag $errors
+     * @return  self
+     */
+    public function hydrateErrorsFromSession(MessageBag $errors = null)
+    {
+        if (!is_null($errors))
+        {
+            $this->errors = $errors;
+            return $this;
+        }
+
+        $request = app()->make('request');
+
+        if ($request->session()->has('errors'))
+        {
+            $this->errors = $request->session()->get('errors', MessageBag::class);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Hydrates the instance with previous input.
+     *
+     * @param   MessageBag $old_input
+     * @return  self
+     */
+    public function hydrateFieldsFromSession(MessageBag $old_input = null)
+    {
+        if (!is_null($old_input))
+        {
+            $this->old_input = $old_input;
+            return $this;
+        }
+
+        $request = app()->make('request');
+
+        if ($request->session()->has('_old_input'))
+        {
+            $this->old_input = new MessageBag($request->old());
         }
 
         return $this;

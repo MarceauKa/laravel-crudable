@@ -140,10 +140,15 @@ More fields are in progress:
 Here's some screenshots of the current example (with the default Bootstrap configuration).
 
 Entry table:
-![Entry table](https://github.com/AkibaTech/laravel-crudable/blob/master/screenshot-table.png)
+![Entry table](https://github.com/AkibaTech/laravel-crudable/blob/master/resources/screenshot-table.png)
 
-Entry form:
-![Entry form](https://github.com/AkibaTech/laravel-crudable/blob/master/screenshot-form.png)
+Entry create form:
+![Entry form](https://github.com/AkibaTech/laravel-crudable/blob/master/resources/screenshot-create.png)
+
+Entry edit form:
+![Entry form](https://github.com/AkibaTech/laravel-crudable/blob/master/resources/screenshot-edit.png)
+
+Of course, all of this **can be easily customized**!
 
 ## Tests
 

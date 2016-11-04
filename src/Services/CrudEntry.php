@@ -54,6 +54,12 @@ class CrudEntry
             {
                 throw new NoFieldsException(get_class($model) . ' has no fields.');
             }
+
+            if (!app()->runningUnitTests() && !app()->runningInConsole())
+            {
+                $this->fields->hydrateErrorsFromSession();
+                $this->fields->hydrateFieldsFromSession();
+            }
         }
         else
         {
@@ -106,7 +112,7 @@ class CrudEntry
         $view = view()->make('crud::row')->with([
             'entry'   => $this,
             'manager' => $this->manager,
-            'actions' => $actions
+            'actions' => $actions,
         ]);
 
         return $view->render();
@@ -125,6 +131,8 @@ class CrudEntry
             'back_url' => $this->manager->getActionRoute('index'),
             'entry'    => $this,
             'manager'  => $this->manager,
+            'errors'   => $this->fields->getErrors(),
+            'old'      => $this->fields->getOldInput()
         ];
 
         if ($is_new)
@@ -136,7 +144,7 @@ class CrudEntry
                 'title'        => trans('crud::form.create_title', ['name' => $name]),
                 'form_url'     => $this->manager->getActionRoute('store'),
                 'form_method'  => $method,
-                'csrf_field'   => csrf_token(),
+                'csrf_field'   => csrf_field(),
                 'method_field' => method_field($method),
             ];
         }
@@ -149,7 +157,7 @@ class CrudEntry
                 'title'        => trans('crud::form.update_title', ['name' => $name]),
                 'form_url'     => $this->manager->getActionRoute('update'),
                 'form_method'  => $method,
-                'csrf_field'   => csrf_token(),
+                'csrf_field'   => csrf_field(),
                 'method_field' => method_field($method),
             ];
         }

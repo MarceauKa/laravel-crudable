@@ -46,13 +46,13 @@ class CrudManager
      * @var array
      */
     protected $routes = [
-        'index'  => [
+        'index'   => [
             'method' => 'GET',
             'uri'    => 'index',
             'as'     => 'index',
             'action' => 'index'
         ],
-        'create' => [
+        'create'  => [
             'method' => 'GET',
             'uri'    => 'create',
             'as'     => 'create',
@@ -64,7 +64,7 @@ class CrudManager
             'as'     => 'store',
             'action' => 'store'
         ],
-        'edit' => [
+        'edit'    => [
             'method' => 'GET',
             'uri'    => 'edit/{id}',
             'as'     => 'edit',
@@ -96,7 +96,16 @@ class CrudManager
     }
 
     /**
-     * @param   string $name
+     * @param   void
+     * @return  string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param   string      $name
      * @param   null|string $pluralized_name
      * @return  self
      */
@@ -106,15 +115,6 @@ class CrudManager
         $this->pluralized_name = is_null($pluralized_name) ? str_plural($name) : $pluralized_name;
 
         return $this;
-    }
-
-    /**
-     * @param   void
-     * @return  string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -201,7 +201,10 @@ class CrudManager
 
             if ($identifier == 'destroy')
             {
-                $params = [$this->entry->getId(), csrf_token()];
+                $params = [
+                    $this->entry->getId(),
+                    csrf_token()
+                ];
             }
 
             if ($identifier == 'update' || $identifier == 'edit')
@@ -241,8 +244,9 @@ class CrudManager
         $controller = $this->controller;
 
         Route::group([
-            'prefix' => $this->route_uri_prefix,
-            'as'     => $this->route_name_prefix
+            'prefix'     => $this->route_uri_prefix,
+            'as'         => $this->route_name_prefix,
+            'middleware' => 'web'
         ], function ($router) use ($routes, $controller)
         {
             foreach ($routes as $route)

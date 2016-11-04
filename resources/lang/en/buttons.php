@@ -2,7 +2,7 @@
 
 return [
 
-    'creates' => 'New',
+    'create'  => 'New',
     'edit'    => 'Edit',
     'destroy' => 'Delete',
     'back'    => 'Back',

@@ -49,6 +49,52 @@ abstract class Field
     }
 
     /**
+     * Add validation rules to the field.
+     *
+     * @param   string|array $rules
+     * @return  mixed
+     */
+    public function withRules($rules)
+    {
+        if (is_array($rules))
+        {
+            foreach ($rules as $rule)
+            {
+                $this->addRule($rule);
+            }
+        }
+        else
+        {
+            if (is_string($rules))
+            {
+                if (stripos($rules, '|') !== false)
+                {
+                    $rules = explode('|', $rules);
+
+                    return $this->withRules($rules);
+                }
+
+                return $this->withRules([$rules]);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add a validation rule.
+     *
+     * @param   string $rule
+     * @return  self
+     */
+    public function addRule($rule)
+    {
+        $this->rules[] = $rule;
+
+        return $this;
+    }
+
+    /**
      * @param   CrudFields $fields
      * @return  self
      */
@@ -68,22 +114,6 @@ abstract class Field
     public function getIdentifier()
     {
         return $this->identifier;
-    }
-
-    /**
-     * Returns the field's label.
-     *
-     * @param   void
-     * @return  string
-     */
-    public function getLabel()
-    {
-        if (empty($this->label))
-        {
-            return title_case($this->identifier);
-        }
-
-        return $this->label;
     }
 
     /**
@@ -108,11 +138,15 @@ abstract class Field
     public function form()
     {
         $view = view()->make($this->getViewName())->with([
-            'field' => $this,
-            'label' => $this->getLabel(),
-            'name'  => $this->identifier,
-            'id'    => 'field-' . $this->identifier,
-            'value' => $this->getValue()
+            'field'     => $this,
+            'has_error' => $this->hasError(),
+            'error'     => $this->getError(),
+            'has_old'   => $this->hasOld(),
+            'old'       => $this->getOld(),
+            'label'     => $this->getLabel(),
+            'name'      => $this->identifier,
+            'id'        => 'field-' . $this->identifier,
+            'value'     => $this->getValue()
         ]);
 
         return $view->render();
@@ -125,6 +159,76 @@ abstract class Field
      * @return  string
      */
     abstract public function getViewName();
+
+    /**
+     * Checks if the field has a previous value.
+     *
+     * @param   void
+     * @return  bool
+     */
+    public function hasOld()
+    {
+        return $this->fields->getOldInput()->has($this->identifier);
+    }
+
+    /**
+     * Returns the old value.
+     *
+     * @param   void
+     * @return  string|null
+     */
+    public function getOld()
+    {
+        if ($this->hasOld())
+        {
+            return $this->fields->getOldInput()->first($this->identifier);
+        }
+
+        return null;
+    }
+
+    /**
+     * Checks if the field has an error.
+     *
+     * @param   void
+     * @return  bool
+     */
+    public function hasError()
+    {
+        return $this->fields->getErrors()->has($this->identifier);
+    }
+
+    /**
+     * Returns the error.
+     *
+     * @param   void
+     * @return  null|string
+     */
+    public function getError()
+    {
+        if ($this->hasError())
+        {
+            return $this->fields->getErrors()->first($this->identifier);
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the field's label.
+     *
+     * @param   void
+     * @return  string
+     */
+    public function getLabel()
+    {
+        if (empty($this->label))
+        {
+            return title_case($this->identifier);
+        }
+
+        return $this->label;
+    }
 
     /**
      * Get the field value.
@@ -146,49 +250,6 @@ abstract class Field
     public function newValue($value)
     {
         $this->fields->getEntry()->getModel()->setAttribute($this->identifier, $value);
-
-        return $this;
-    }
-
-    /**
-     * Add validation rules to the field.
-     *
-     * @param   string|array $rules
-     * @return  mixed
-     */
-    public function withRules($rules)
-    {
-        if (is_array($rules))
-        {
-            foreach ($rules as $rule)
-            {
-                $this->addRule($rule);
-            }
-        }
-        else if (is_string($rules))
-        {
-            if (stripos($rules, '|') !== false)
-            {
-                $rules = explode('|', $rules);
-
-                return $this->withRules($rules);
-            }
-
-            return $this->withRules([$rules]);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Add a validation rule.
-     *
-     * @param   string $rule
-     * @return  self
-     */
-    public function addRule($rule)
-    {
-        $this->rules[] = $rule;
 
         return $this;
     }
