@@ -84,7 +84,16 @@ class CrudManager
         ],
     ];
 
-    //-------------------------------------------------------------------------
+    /**
+     * Make staticly a new instance.
+     *
+     * @param   void
+     * @return  CrudManager
+     */
+    public static function make()
+    {
+        return (new static);
+    }
 
     /**
      * @param   string $name
@@ -99,8 +108,6 @@ class CrudManager
         return $this;
     }
 
-    //-------------------------------------------------------------------------
-
     /**
      * @param   void
      * @return  string
@@ -110,8 +117,6 @@ class CrudManager
         return $this->name;
     }
 
-    //-------------------------------------------------------------------------
-
     /**
      * @param   void
      * @return  string
@@ -120,8 +125,6 @@ class CrudManager
     {
         return $this->pluralized_name;
     }
-
-    //-------------------------------------------------------------------------
 
     /**
      * @param   string $prefix
@@ -134,8 +137,6 @@ class CrudManager
         return $this;
     }
 
-    //-------------------------------------------------------------------------
-
     /**
      * @param   void
      * @return  string
@@ -144,8 +145,6 @@ class CrudManager
     {
         return $this->route_uri_prefix;
     }
-
-    //-------------------------------------------------------------------------
 
     /**
      * @param   string $prefix
@@ -158,8 +157,6 @@ class CrudManager
         return $this;
     }
 
-    //-------------------------------------------------------------------------
-
     /**
      * @param   string $prefix
      * @return  string
@@ -169,8 +166,6 @@ class CrudManager
         return $this->route_name_prefix;
     }
 
-    //-------------------------------------------------------------------------
-
     /**
      * @param   void
      * @return  string
@@ -179,8 +174,6 @@ class CrudManager
     {
         return $this->controller;
     }
-
-    //-------------------------------------------------------------------------
 
     /**
      * @param   string $prefix
@@ -192,8 +185,6 @@ class CrudManager
 
         return $this;
     }
-
-    //-------------------------------------------------------------------------
 
     /**
      * @param   string $identifier
@@ -224,8 +215,6 @@ class CrudManager
         throw new InvalidRouteIdentifierException("$identifier route identifier not found.");
     }
 
-    //-------------------------------------------------------------------------
-
     /**
      * @param   string $identifier
      * @return  string
@@ -241,8 +230,6 @@ class CrudManager
 
         throw new InvalidRouteIdentifierException("$identifier route identifier not found.");
     }
-
-    //-------------------------------------------------------------------------
 
     /**
      * @param   void
@@ -272,8 +259,6 @@ class CrudManager
         return $this;
     }
 
-    //-------------------------------------------------------------------------
-
     /**
      * @param   void
      * @return  CrudEntry|null
@@ -282,8 +267,6 @@ class CrudManager
     {
         return $this->entry;
     }
-
-    //-------------------------------------------------------------------------
 
     /**
      * @param   CrudEntry $entry

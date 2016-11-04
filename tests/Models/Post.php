@@ -15,17 +15,16 @@ class Post extends Model
 
     public function getCrudFields()
     {
-        return (new CrudFields())
-            ->add([
-                new TextField('title', 'required|min:3'),
-                new TextareaField('introduction', 'required|min:3'),
-                new TextareaField('content', 'required|min:3')
-            ]);
+        return CrudFields::make([
+            new TextField('title', 'required|min:3'),
+            new TextareaField('introduction', 'required|min:3'),
+            new TextareaField('content', 'required|min:3')
+        ]);
     }
 
     public function getCrudManager()
     {
-        return (new CrudManager())
+        return CrudManager::make()
             ->setNamePrefix('posts')
             ->setUriPrefix('crud/posts')
             ->setName('Post');

@@ -24,6 +24,17 @@ class CrudFields
     protected $entry;
 
     /**
+     * Make staticly a new instance.
+     *
+     * @param   array $fields
+     * @return  CrudFields
+     */
+    public static function make(array $fields)
+    {
+        return (new static)->add($fields);
+    }
+
+    /**
      * @param   CrudEntry $entry
      * @return  self
      */

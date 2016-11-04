@@ -57,22 +57,21 @@ class Post extends Model
     use Crudable;
 
     public function getCrudFields()
-    {
-        return (new CrudFields())
-            ->add([
+        {
+            return CrudFields::make([
                 new TextField('title', 'required|min:3'),
                 new TextareaField('introduction', 'required|min:3'),
                 new TextareaField('content', 'required|min:3')
             ]);
-    }
-
-    public function getCrudManager()
-    {
-        return (new CrudManager())
-            ->setNamePrefix('posts')
-            ->setUriPrefix('crud/posts')
-            ->setName('Post');
-    }
+        }
+    
+        public function getCrudManager()
+        {
+            return CrudManager::make()
+                ->setNamePrefix('posts')
+                ->setUriPrefix('crud/posts')
+                ->setName('Post');
+        }
 }
 ```
 
