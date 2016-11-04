@@ -94,6 +94,14 @@ Shows an edit form:
 {!! $post->crud()->form() !!}
 ```
 
+Routes scaffolding:
+```php
+// For example, in AppServiceProvider.php
+App\Post::crudRoutes(); // Will generate routes for your Eloquent CRUD
+```
+
+Controllers traits are coming for rapid scaffolding.
+
 ## Validating
 
 **More doc is coming**
