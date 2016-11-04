@@ -119,7 +119,7 @@ class CrudValidator
     }
 
     /**
-     * @param   null|string $to
+     * @param   void
      * @return  RedirectResponse
      */
     public function redirect()

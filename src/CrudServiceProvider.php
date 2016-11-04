@@ -20,11 +20,11 @@ class CrudServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole())
         {
             $this->publishes([
-                __DIR__.'/../resources/lang/' => resource_path('lang/vendor/crud'),
+                __DIR__ . '/../resources/lang/' => resource_path('lang/vendor/crud'),
             ], 'crud');
 
             $this->publishes([
-                __DIR__.'/../resources/views/' => resource_path('views/vendor/crud'),
+                __DIR__ . '/../resources/views/' => resource_path('views/vendor/crud'),
             ], 'crud');
         }
 

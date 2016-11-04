@@ -7,7 +7,6 @@ use Akibatech\Crud\Exceptions\NoFieldsException;
 use Akibatech\Crud\Fields\Field;
 use Akibatech\Crud\Traits\Crudable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 /**
  * Class CrudEntry
@@ -213,7 +212,7 @@ class CrudEntry
      * Shortcut to self validate.
      *
      * @param   array $data
-     * @return  self
+     * @return  CrudValidator
      */
     public function validate(array $data)
     {

@@ -86,7 +86,6 @@ class CrudFields
     }
 
     /**
-     * @param   string $identifier
      * @param   Field $field
      * @return  self
      * @throws  DuplicateFieldIdentifierException
@@ -171,7 +170,7 @@ class CrudFields
      * Returns all fields keys.
      *
      * @param   void
-     * @return  array
+     * @return  integer[]
      */
     public function keys()
     {
