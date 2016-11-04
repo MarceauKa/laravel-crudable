@@ -1,6 +1,6 @@
 # Laravel Crudable
 
-[![Build Status](https://travis-ci.org/AkibaTech/laravel-crudable.svg?branch=master)](https://travis-ci.org/AkibaTech/laravel-crudable)
+[![Build Status](https://travis-ci.org/AkibaTech/laravel-crudable.svg?branch=master)](https://travis-ci.org/AkibaTech/laravel-crudable) [![Build Status](https://scrutinizer-ci.com/g/AkibaTech/laravel-crudable/badges/build.png?b=master)](https://scrutinizer-ci.com/g/AkibaTech/laravel-crudable/build-status/master)
 
 Laravel Crudable is a library built to **bring CRUD functionnalities to your Eloquent models**.  
 At this stage it's a proof of concept and the package is not fully working...
