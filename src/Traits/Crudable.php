@@ -67,12 +67,14 @@ trait Crudable
      */
     public function newCollection(array $models = [])
     {
+        $class = __CLASS__;
+
         if (method_exists($this, 'newCrudCollection'))
         {
-            return $this->newCrudCollection($models);
+            return $this->newCrudCollection($models, $class);
         }
 
-        return new CrudCollection($models);
+        return new CrudCollection($models, $class);
     }
 
     //-------------------------------------------------------------------------

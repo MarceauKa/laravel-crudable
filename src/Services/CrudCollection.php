@@ -22,22 +22,20 @@ class CrudCollection extends Collection
      */
     protected $fields;
 
-    //-------------------------------------------------------------------------
-
     /**
      * CrudCollection constructor.
      *
      * @param   Crudable[] $items
      */
-    public function __construct($items)
+    public function __construct($items, $class)
     {
         parent::__construct($items);
 
-        $this->fields = $this->first()->getCrudFields();
-        $this->manager = $this->first()->getCrudManager();
-    }
+        $class = empty($items) ? new $class : $this->first();
 
-    //-------------------------------------------------------------------------
+        $this->fields = $class->getCrudFields();
+        $this->manager = $class->getCrudManager();
+    }
 
     /**
      * @param   void
@@ -47,8 +45,6 @@ class CrudCollection extends Collection
     {
         return $this->fields;
     }
-
-    //-------------------------------------------------------------------------
 
     /**
      * @param   void
@@ -65,8 +61,6 @@ class CrudCollection extends Collection
 
         return $view->render();
     }
-
-    //-------------------------------------------------------------------------
 
     /**
      * @param   void

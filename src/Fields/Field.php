@@ -3,7 +3,6 @@
 namespace Akibatech\Crud\Fields;
 
 use Akibatech\Crud\Services\CrudFields;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Field

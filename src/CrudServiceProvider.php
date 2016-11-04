@@ -28,8 +28,16 @@ class CrudServiceProvider extends ServiceProvider
             ], 'crud');
         }
 
-        $this->loadViewsFrom(resource_path('views/vendor/crud'), 'crud');
-        $this->loadTranslationsFrom(resource_path('lang/vendor/crud'), 'crud');
+        if ($this->app->runningUnitTests())
+        {
+            $this->loadViewsFrom(__DIR__ . '/../resources/views/', 'crud');
+            $this->loadTranslationsFrom(__DIR__ . '/../resources/lang/', 'crud');
+        }
+        else
+        {
+            $this->loadViewsFrom(resource_path('views/vendor/crud'), 'crud');
+            $this->loadTranslationsFrom(resource_path('lang/vendor/crud'), 'crud');
+        }
     }
 
     /**
