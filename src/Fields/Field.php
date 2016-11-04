@@ -27,6 +27,11 @@ abstract class Field
     protected $label;
 
     /**
+     * @var string
+     */
+    protected $placeholder;
+
+    /**
      * @var array
      */
     protected $rules;
@@ -34,7 +39,8 @@ abstract class Field
     /**
      * Field constructor.
      *
-     * @param   string $identifier
+     * @param   string       $identifier
+     * @param   array|string $rules
      */
     public function __construct($identifier, $rules = null)
     {
@@ -45,6 +51,19 @@ abstract class Field
             $this->withRules($rules);
         }
     }
+
+    /**
+     * Constructs staticly.
+     *
+     * @param   string $idenfitier
+     * @param   null|string|array $rules
+     * @return  static
+     */
+    public static function handle($idenfitier, $rules = null)
+    {
+        return (new static($idenfitier, $rules));
+    }
+
 
     /**
      * Add validation rules to the field.
@@ -128,6 +147,32 @@ abstract class Field
     }
 
     /**
+     * Defines a placeholder for the field.
+     *
+     * @param   string $placeholder
+     * @return  self
+     */
+    public function withPlaceholder($placeholder)
+    {
+        $this->placeholder = $placeholder;
+
+        return $this;
+    }
+
+    /**
+     * Appends an help message to the input.
+     *
+     * @param   string $help
+     * @return  self
+     */
+    public function withHelp($help)
+    {
+        $this->help = $help;
+
+        return $this;
+    }
+
+    /**
      * Returns the field's form.
      *
      * @param   void
@@ -136,15 +181,17 @@ abstract class Field
     public function form()
     {
         $view = view()->make($this->getViewName())->with([
-            'field'     => $this,
-            'has_error' => $this->hasError(),
-            'error'     => $this->getError(),
-            'has_old'   => $this->hasOld(),
-            'old'       => $this->getOld(),
-            'label'     => $this->getLabel(),
-            'name'      => $this->identifier,
-            'id'        => 'field-' . $this->identifier,
-            'value'     => $this->getValue()
+            'field'       => $this,
+            'has_error'   => $this->hasError(),
+            'error'       => $this->getError(),
+            'placeholder' => $this->getPlaceholder(),
+            'help'        => $this->getHelp(),
+            'has_old'     => $this->hasOld(),
+            'old'         => $this->getOld(),
+            'label'       => $this->getLabel(),
+            'name'        => $this->identifier,
+            'id'          => 'field-' . $this->identifier,
+            'value'       => $this->getValue()
         ]);
 
         return $view->render();
@@ -157,33 +204,6 @@ abstract class Field
      * @return  string
      */
     abstract public function getViewName();
-
-    /**
-     * Checks if the field has a previous value.
-     *
-     * @param   void
-     * @return  bool
-     */
-    public function hasOld()
-    {
-        return $this->fields->getOldInput()->has($this->identifier);
-    }
-
-    /**
-     * Returns the old value.
-     *
-     * @param   void
-     * @return  string|null
-     */
-    public function getOld()
-    {
-        if ($this->hasOld())
-        {
-            return $this->fields->getOldInput()->first($this->identifier);
-        }
-
-        return null;
-    }
 
     /**
      * Checks if the field has an error.
@@ -207,6 +227,65 @@ abstract class Field
         if ($this->hasError())
         {
             return $this->fields->getErrors()->first($this->identifier);
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the field's placeholder.
+     *
+     * @param   void
+     * @return  string
+     */
+    public function getPlaceholder()
+    {
+        if (empty($this->placeholder))
+        {
+            return null;
+        }
+
+        return $this->placeholder;
+    }
+
+    /**
+     * Returns the field's help.
+     *
+     * @param   void
+     * @return  string
+     */
+    public function getHelp()
+    {
+        if (empty($this->help))
+        {
+            return null;
+        }
+
+        return $this->help;
+    }
+
+    /**
+     * Checks if the field has a previous value.
+     *
+     * @param   void
+     * @return  bool
+     */
+    public function hasOld()
+    {
+        return $this->fields->getOldInput()->has($this->identifier);
+    }
+
+    /**
+     * Returns the old value.
+     *
+     * @param   void
+     * @return  string|null
+     */
+    public function getOld()
+    {
+        if ($this->hasOld())
+        {
+            return $this->fields->getOldInput()->first($this->identifier);
         }
 
         return null;
