@@ -68,9 +68,13 @@ class Post extends Model
     public function getCrudFields()
     {
         return CrudFields::make([
-            TextField::handle('title', 'required|min:3')->withPlaceholder('The title of the post'),
-            TextareaField::handle('introduction', 'required|min:3')->withPlaceholder('Short introduction to the post'),
-            TextareaField::handle('content', 'required|min:3')->withPlaceholder('Your content !')->withHelp('Markdown supported!')
+            TextField::handle('title', 'required|min:3')
+                ->withPlaceholder('The title of the post'),
+            TextareaField::handle('introduction', 'required|min:3')
+                ->withPlaceholder('Short introduction to the post'),
+            TextareaField::handle('content', 'required|min:3')
+                ->withPlaceholder('Your content !')
+                ->withHelp('My custom help')
         ]);
     }
     
