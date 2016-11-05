@@ -1,6 +1,6 @@
 # Laravel Crudable
 
-[![Build Status](https://travis-ci.org/AkibaTech/laravel-crudable.svg?branch=master)](https://travis-ci.org/AkibaTech/laravel-crudable) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/AkibaTech/laravel-crudable/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/AkibaTech/laravel-crudable/?branch=master)
+[![Build Status](https://travis-ci.org/AkibaTech/laravel-crudable.svg?branch=master)](https://travis-ci.org/AkibaTech/laravel-crudable) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/AkibaTech/laravel-crudable/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/AkibaTech/laravel-crudable/?branch=master) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/bb03f595-0cf6-4003-bab2-9f828e8a421c/mini.png)](https://insight.sensiolabs.com/projects/bb03f595-0cf6-4003-bab2-9f828e8a421c)
 
 Laravel Crudable is a library built to **bring CRUD functionnalities to your Eloquent models**.  
 At this stage it's a proof of concept and the package is not fully working...
