@@ -189,7 +189,7 @@ Actually there's 2 fields implemented:
 
 ### Planned
 
-More fields are in planned:
+More fields are planned:
 - CheckboxField
 - RadioField
 - PasswordField
