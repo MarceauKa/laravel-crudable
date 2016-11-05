@@ -218,6 +218,11 @@ class CrudManager
                 $params = [$this->entry->getId()];
             }
 
+            if (Route::has($name) === false)
+            {
+                return '#';
+            }
+
             return empty($params) ? route($name) : route($name, $params);
         }
 
