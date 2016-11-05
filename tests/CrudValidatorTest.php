@@ -32,10 +32,10 @@ class CrudValidatorTest extends AbstractTestCase
      */
     public function instance_creation()
     {
-        $validator = new \Akibatech\Crud\Services\CrudValidator($this->model->crud());
+        $validator = new \Akibatech\Crud\Services\CrudValidator($this->model->crudEntry());
 
         $this->assertInstanceOf(Akibatech\Crud\Services\CrudValidator::class, $validator);
-        $this->assertEquals($validator->getEntry(), $this->model->crud());
+        $this->assertEquals($validator->getEntry(), $this->model->crudEntry());
     }
 
     /**
@@ -44,10 +44,10 @@ class CrudValidatorTest extends AbstractTestCase
      */
     public function entry_returns_self_validator()
     {
-        $validator = $this->model->crud()->getValidator();
+        $validator = $this->model->crudEntry()->getValidator();
 
         $this->assertInstanceOf(Akibatech\Crud\Services\CrudValidator::class, $validator);
-        $this->assertEquals($validator->getEntry(), $this->model->crud());
+        $this->assertEquals($validator->getEntry(), $this->model->crudEntry());
     }
 
     /**
@@ -56,7 +56,7 @@ class CrudValidatorTest extends AbstractTestCase
      */
     public function passes_valid_data()
     {
-        $validator = $this->model->crud()->validate([
+        $validator = $this->model->crudEntry()->validate([
             'title' => 'My title',
             'introduction' => 'My introduction',
             'content' => 'My content'
@@ -72,7 +72,7 @@ class CrudValidatorTest extends AbstractTestCase
      */
     public function fails_invalid_data()
     {
-        $validator = $this->model->crud()->validate([
+        $validator = $this->model->crudEntry()->validate([
             'title' => 'My title',
         ]);
 
@@ -86,13 +86,13 @@ class CrudValidatorTest extends AbstractTestCase
      */
     public function hydrates_fields_on_correct_validation()
     {
-        $this->model->crud()->validate([
+        $this->model->crudEntry()->validate([
             'title' => 'My title',
             'introduction' => 'My introduction',
             'content' => 'My content'
         ])->save();
 
-        $this->assertEquals('My title', $this->model->crud()->getFields()->get('title')->getValue());
+        $this->assertEquals('My title', $this->model->crudEntry()->getFields()->get('title')->getValue());
     }
 
     /**
@@ -102,7 +102,7 @@ class CrudValidatorTest extends AbstractTestCase
      */
     public function throws_exception_when_trying_to_save_failed_validation()
     {
-        $this->model->crud()->validate([
+        $this->model->crudEntry()->validate([
             'title' => 'My title',
         ])->save();
     }

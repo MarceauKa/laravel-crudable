@@ -2,10 +2,11 @@
 
 namespace Akibatech\Crud\Traits;
 
-use Akibatech\Crud\Services\CrudCollection;
+use Akibatech\Crud\Crud;
 use Akibatech\Crud\Services\CrudEntry;
 use Akibatech\Crud\Services\CrudFields;
 use Akibatech\Crud\Services\CrudManager;
+use Akibatech\Crud\Services\CrudTable;
 
 /**
  * Class Crudable
@@ -17,27 +18,42 @@ trait Crudable
     /**
      * @var CrudEntry
      */
-    protected $crud;
-
-    //-------------------------------------------------------------------------
+    protected $crud_entry;
 
     /**
-     * Initialize if not exists and returns the CrudManager for the model.
-     *
+     * @var CrudTable
+     */
+    protected $crud_table;
+
+    /**
      * @param   void
      * @return  CrudEntry
+     * @throws  \Akibatech\Crud\Exceptions\InvalidArgumentException
      */
-    public function crud()
+    public function crudEntry()
     {
-        if (is_null($this->crud))
+        if (is_null($this->crud_entry))
         {
-            $this->crud = new CrudEntry($this);
+            $this->crud_entry = Crud::entry($this);
         }
 
-        return $this->crud;
+        return $this->crud_entry;
     }
 
-    //-------------------------------------------------------------------------
+    /**
+     * @param   void
+     * @return  CrudTable
+     * @throws  \Akibatech\Crud\Exceptions\InvalidArgumentException
+     */
+    public function crudTable()
+    {
+        if (is_null($this->crud_table))
+        {
+            $this->crud_table = Crud::table($this);
+        }
+
+        return $this->crud_table;
+    }
 
     /**
      * Returns model fields configuration.
@@ -47,8 +63,6 @@ trait Crudable
      */
     abstract public function getCrudFields();
 
-    //-------------------------------------------------------------------------
-
     /**
      * Returns the CRUD configuration.
      *
@@ -56,28 +70,6 @@ trait Crudable
      * @return  CrudManager
      */
     abstract public function getCrudManager();
-
-    //-------------------------------------------------------------------------
-
-    /**
-     * Create a new CrudCollection instance.
-     *
-     * @param  Crudable[]  $models
-     * @return CrudCollection
-     */
-    public function newCollection(array $models = [])
-    {
-        $class = __CLASS__;
-
-        if (method_exists($this, 'newCrudCollection'))
-        {
-            return $this->newCrudCollection($models, $class);
-        }
-
-        return new CrudCollection($models, $class);
-    }
-
-    //-------------------------------------------------------------------------
 
     /**
      * @param   void

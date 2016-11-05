@@ -43,6 +43,11 @@ class CrudManager
     protected $controller;
 
     /**
+     * @var int
+     */
+    protected $per_page = 25;
+
+    /**
      * @var array
      */
     protected $routes = [
@@ -281,5 +286,25 @@ class CrudManager
         $this->entry = $entry;
 
         return $this;
+    }
+
+    /**
+     * @param   int $per_page
+     * @return  self
+     */
+    public function setPerPage($per_page = 25)
+    {
+        $this->per_page = (int)$per_page;
+
+        return $this;
+    }
+
+    /**
+     * @param   void
+     * @return  int
+     */
+    public function getPerPage()
+    {
+        return $this->per_page;
     }
 }

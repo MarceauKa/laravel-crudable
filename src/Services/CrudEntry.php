@@ -7,6 +7,7 @@ use Akibatech\Crud\Exceptions\NoFieldsException;
 use Akibatech\Crud\Fields\Field;
 use Akibatech\Crud\Traits\Crudable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\View;
 
 /**
  * Class CrudEntry
@@ -161,7 +162,7 @@ class CrudEntry
             ];
         }
 
-        $view = view()->make($view_name)->with($with);
+        $view = View::make($view_name)->with($with);
 
         return $view->render();
     }
@@ -247,16 +248,11 @@ class CrudEntry
     }
 
     /**
-     * @param   string $name
-     * @return  Field|null
+     * @param   void
+     * @return  string
      */
-    public function __get($name)
+    public function __toString()
     {
-        if ($this->fields->has($name))
-        {
-            return $this->fields->get($name)->setEntry($this);
-        }
-
-        return null;
+        return $this->form();
     }
 }

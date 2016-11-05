@@ -38,6 +38,12 @@ class CrudServiceProvider extends ServiceProvider
             $this->loadViewsFrom(resource_path('views/vendor/crud'), 'crud');
             $this->loadTranslationsFrom(resource_path('lang/vendor/crud'), 'crud');
         }
+
+        $this->app->bind('Akibatech\Crud\Crud', Crud::class);
+        $this->app->alias('Akibatech\Crud\Crud', 'crud');
+
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Crud', 'Akibatech\Crud\CrudFacade');
     }
 
     /**

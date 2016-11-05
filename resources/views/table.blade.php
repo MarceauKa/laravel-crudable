@@ -1,23 +1,23 @@
 <h1>{{ $title }}</h1>
 
-@if($items->isEmpty() === false)
+@if($is_empty === false)
     <p>
-        {{ trans_choice('crud::table.count_results', $items->count()) }}<br>
+        {{ trans_choice('crud::table.count_results', $count) }}<br>
         <a href="{{ $create_url }}" class="btn btn-primary btn-xs">{{ trans('crud::buttons.create') }}</a>
     </p>
 
     <table class="table table-striped">
         <thead>
             <tr>
-                @foreach($fields->columns() as $column)
+                @foreach($columns as $column)
                 <th>{{ $column }}</th>
                 @endforeach
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($items as $item)
-                {!! $item->crud()->row() !!}
+            @foreach($entries as $entry)
+                {!! $entry->crudEntry()->row() !!}
             @endforeach
         </tbody>
     </table>

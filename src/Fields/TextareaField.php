@@ -16,4 +16,12 @@ class TextareaField extends Field
     {
         return 'crud::fields.textarea';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTableValue()
+    {
+        return str_limit($this->getValue(), 40);
+    }
 }

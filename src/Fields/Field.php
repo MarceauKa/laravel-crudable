@@ -319,6 +319,17 @@ abstract class Field
     }
 
     /**
+     * Get the value to be displayed on a table.
+     *
+     * @param   void
+     * @return  mixed
+     */
+    public function getTableValue()
+    {
+        return $this->getValue();
+    }
+
+    /**
      * Set a new value to the model.
      *
      * @param   mixed $value

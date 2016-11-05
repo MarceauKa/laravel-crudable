@@ -1,7 +1,7 @@
 <tr>
     @foreach($entry->fields() as $field)
     <td>
-        {{ $field->getValue() }}
+        {{ $field->getTableValue() }}
     </td>
     @endforeach
     <td>

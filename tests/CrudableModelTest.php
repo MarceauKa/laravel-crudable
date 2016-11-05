@@ -25,7 +25,7 @@ class CrudableModelTest extends AbstractTestCase
     /**
      * @test
      */
-    public function crudable_model_returns_crud_fields()
+    public function it_returns_crud_fields()
     {
         $this->assertInstanceOf('Akibatech\Crud\Services\CrudFields', $this->model->getCrudFields());
     }
@@ -33,8 +33,24 @@ class CrudableModelTest extends AbstractTestCase
     /**
      * @test
      */
-    public function crudable_model_returns_crud_manager()
+    public function it_returns_crud_manager()
     {
         $this->assertInstanceOf('Akibatech\Crud\Services\CrudManager', $this->model->getCrudManager());
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_crud_table()
+    {
+        $this->assertInstanceOf(\Akibatech\Crud\Services\CrudTable::class, $this->model->crudTable());
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_crud_entry()
+    {
+        $this->assertInstanceOf(\Akibatech\Crud\Services\CrudEntry::class, $this->model->crudEntry());
     }
 }

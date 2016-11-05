@@ -30,7 +30,7 @@ class FieldTest extends AbstractTestCase
         parent::setUp();
 
         $this->model = new \TestModel\Post();
-        $this->entry = $this->model->crud();
+        $this->entry = $this->model->crudEntry();
         $this->title = $this->entry->getFields()->get('title');
     }
 

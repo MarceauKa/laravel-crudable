@@ -10,6 +10,7 @@ At this stage it's a proof of concept and the package is not fully working...
 - [Usage](#usage)
 - [Validating](#validating)
 - [Fields](#fields)
+- [Customizing](#customizing)
 - [Screenshots](#screenshots)
 - [Tests](#tests)
 - [Contribute](#contribute)
@@ -52,6 +53,8 @@ This command will publish language files and views for easy customization.
 
 **More doc is coming**
 
+### Basic example
+
 Example model
 ```php
 use Akibatech\Crud\Fields\TextareaField;
@@ -90,12 +93,12 @@ class Post extends Model
 
 Shows the table (on a model collection):
 ```blade
-{!! $posts->table() !!}
+{!! $posts->crudTable() !!}
 ```
 
 Shows an edit form:
 ```blade
-{!! $post->crud()->form() !!}
+{!! $post->crudEntry() !!}
 ```
 
 Routes scaffolding:
@@ -104,7 +107,51 @@ Routes scaffolding:
 App\Post::crudRoutes(); // Will generate routes for your Eloquent CRUD
 ```
 
-Controllers traits are coming for rapid scaffolding.
+### The table
+
+You can scaffold the CRUD table in many ways:
+```php
+// Via helper
+$crud = crud_table(Model::class); // Or crud_table($model_instance)
+// Via Facade
+$crud = Crud::table(Model::class);
+// Via Factory
+$crud = Akibatech\Crud\Crud::table(Model::class)
+// Via model instance
+$crud = $model->crudTable();
+```
+
+Once the table instance in hands, it can be displayed like this:
+```
+// In a view (powered by __toString)
+{!! $crud->table() !!}
+// Or like this from a model instance
+{!! $model->crudTable()->table() !!}
+```
+
+### The entry
+
+You can scaffold the CRUD entry in many ways:
+```php
+// Via helper
+$crud = crud_entry(Model::class); // Or crud_table($model_instance)
+// Via Facade
+$crud = Crud::entry(Model::class);
+// Via Factory
+$crud = Akibatech\Crud\Crud::entry(Model::class)
+// Via model instance
+$crud = $model->crudEntry();
+```
+
+Once the entry instance in hands, the entry form displayed like this:
+```
+// In a view (powered by __toString)
+{!! $crud->form() !!}
+// Or like this from a model instance
+{!! $model->crudEntry()->form() !!}
+```
+
+The entry instance takes care if the model should be created or updated.
 
 ## Validating
 
@@ -116,8 +163,7 @@ Here's an example for creation:
 ```php
 public function create()
 {
-    $post = new App\Post();
-    $validator = $post->crud()->validate($request->only(['title', 'introduction', 'content']));
+    $validator = Crud::entry(Post::class)->validate($request->only(['title', 'introduction', 'content']));
     
     if ($validator->passes()) {
         $validator->save();
@@ -137,9 +183,9 @@ Actually there's 2 fields implemented:
 - TextField: A basic text input
 - TextareaField: A basic textarea input
 
-### WIP
+### Planned
 
-More fields are in progress:
+More fields are in planned:
 - CheckboxField
 - RadioField
 - PasswordField
@@ -155,6 +201,46 @@ More fields are in progress:
 - MarkdownField
 - WysiwygField
 - ...and many more
+
+## Customizing
+
+All views are customizable and are stored in `resources/views/vendor/crud`. Here's the details:
+
+### Table view `table.blade.php`
+
+- `$create_url` URL to the create form
+- `$title` Title of the table
+- `$count` Entries count
+- `$is_empty` Empty or not?
+- `$entries` Entries collection. Each entries calls the row view
+- `$columns` An array containing names of columns
+
+### Row view `row.blade.php`
+
+- `$entry` The CrudEntry instance
+- `$manager` The manager (descriptions is coming)
+- `$actions` The entry buttons (not customizable yet)
+
+### Form view `form-create.blade.php` and `form-update.blade.php`
+
+- `$back_url` URL to the index view
+- `$entry` CrudEntry instance itself
+- `$errors` Validation errors
+- `$old` Old inputs values
+- `$title` Form title
+- `$form_url` Form action URL
+- `$form_method` Form method
+- and more...
+
+### Field view `fields/*.blade.php`
+
+Each view is named by its field.  
+Ex: `fields/text.blade.php` for the `TextField`.
+
+- `$field` Field instance itself 
+- `$error` Validation error for the field 
+- `$old` Old value for the field 
+- and more...
 
 ## Screenshots
 
