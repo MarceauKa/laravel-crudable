@@ -163,10 +163,10 @@ class CrudManager
     }
 
     /**
-     * @param   string $prefix
+     * @param   void
      * @return  string
      */
-    public function getNamePrefix($prefix)
+    public function getNamePrefix()
     {
         return $this->route_name_prefix;
     }

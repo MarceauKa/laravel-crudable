@@ -4,7 +4,6 @@ namespace Akibatech\Crud\Services;
 
 use Akibatech\Crud\Exceptions\InvalidModelException;
 use Akibatech\Crud\Exceptions\NoFieldsException;
-use Akibatech\Crud\Fields\Field;
 use Akibatech\Crud\Traits\Crudable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\View;
