@@ -122,7 +122,7 @@ $crud = $model->crudTable();
 ```
 
 Once the table instance in hands, it can be displayed like this:
-```
+```blade
 // In a view (powered by __toString)
 {!! $crud->table() !!}
 // Or like this from a model instance
@@ -144,7 +144,7 @@ $crud = $model->crudEntry();
 ```
 
 Once the entry instance in hands, the entry form displayed like this:
-```
+```blade
 // In a view (powered by __toString)
 {!! $crud->form() !!}
 // Or like this from a model instance
