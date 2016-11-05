@@ -166,7 +166,8 @@ Here's an example for creation:
 ```php
 public function create()
 {
-    $validator = Crud::entry(Post::class)->validate($request->only(['title', 'introduction', 'content']));
+    $validator = Crud::entry(Post::class)
+                    ->validate($request->only(['title', 'introduction', 'content']));
     
     if ($validator->passes()) {
         $validator->save();
