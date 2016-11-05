@@ -3,7 +3,6 @@
 namespace Akibatech\Crud\Services;
 
 use Akibatech\Crud\Traits\Crudable;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 

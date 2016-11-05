@@ -3,6 +3,7 @@
 namespace Akibatech\Crud\Services;
 
 use Akibatech\Crud\Exceptions\InvalidRouteIdentifierException;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -252,7 +253,7 @@ class CrudManager
             'prefix'     => $this->route_uri_prefix,
             'as'         => $this->route_name_prefix,
             'middleware' => 'web'
-        ], function ($router) use ($routes, $controller)
+        ], function (Router $router) use ($routes, $controller)
         {
             foreach ($routes as $route)
             {

@@ -73,10 +73,10 @@ trait Crudable
 
     /**
      * @param   void
-     * @return  static
+     * @return  CrudManager
      */
     public static function crudRoutes()
     {
-        $routes = (new static)->getCrudManager()->registerRoutes();
+        return (new static)->getCrudManager()->registerRoutes();
     }
 }

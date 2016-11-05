@@ -6,9 +6,6 @@ use Akibatech\Crud\Exceptions\InvalidArgumentException;
 use Akibatech\Crud\Services\CrudEntry;
 use Akibatech\Crud\Services\CrudTable;
 use Akibatech\Crud\Traits\Crudable;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Factory

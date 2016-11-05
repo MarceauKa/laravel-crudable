@@ -5,7 +5,6 @@ namespace Akibatech\Crud\Services;
 use Akibatech\Crud\Exceptions\DuplicateFieldIdentifierException;
 use Akibatech\Crud\Exceptions\NoFieldsException;
 use Akibatech\Crud\Fields\Field;
-use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 
 /**
