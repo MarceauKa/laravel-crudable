@@ -1,0 +1,112 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Http\Request;
+use DummyRootNamespaceHttp\Controllers\Controller;
+
+class DummyClass extends Controller
+{
+    /**
+     * Display a listing of the CRUD entries.
+     *
+     * @param   void
+     * @return  \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $crud = crud_table(DummyModelClass);
+
+        return view('your-view-table', ['crud' => $crud]);
+    }
+
+    /**
+     * Display the CRUD create form.
+     *
+     * @param   void
+     * @return  \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $crud = crud_entry(new DummyModel);
+
+        return view('your-view-form', ['crud' => $crud]);
+    }
+
+    /**
+     * Store the CRUD entry.
+     *
+     * @param   \Illuminate\Http\Request  $request
+     * @return  \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $crud = new DummyModel;
+        $validator = $crud->crudEntry()->getValidator();
+
+        $validator->validateRequest($request);
+
+        if ($validator->passes())
+        {
+            $validator->save();
+        }
+
+        return $validator->redirect();
+    }
+
+    /**
+     * Show the form for editing the current CRUD entry.
+     *
+     * @param   int  $id
+     * @return  \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $crud = crud_entry(DummyModel::findOrFail($id));
+
+        return view('your-view-form', ['crud' => $crud]);
+    }
+
+    /**
+     * Update the CRUD entry.
+     *
+     * @param   \Illuminate\Http\Request  $request
+     * @param   int  $id
+     * @return  \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $model = DummyModel::findOrFail($id);
+        $validator = $model->crudEntry()->getValidator();
+
+        $validator->validateRequest($request);
+
+        if ($validator->passes())
+        {
+            $validator->save();
+        }
+
+        return $validator->redirect();
+    }
+
+    /**
+     * Destroy the current CRUD entry.
+     *
+     * @param   int  $id
+     * @param   string $csrf
+     * @return  \Illuminate\Http\Response
+     */
+    public function destroy($id, $csrf)
+    {
+        if (csrf_token() != $csrf)
+        {
+            abort(403);
+        }
+
+        $model = DummyModel::findOrFail($id);
+
+        $model->delete();
+
+        return redirect()->back();
+    }
+}

@@ -21,6 +21,6 @@ if (function_exists('crud') === false)
      */
     function crud_entry($crudable)
     {
-        return \Akibatech\Crud\Crud::table($crudable);
+        return \Akibatech\Crud\Crud::entry($crudable);
     }
 }

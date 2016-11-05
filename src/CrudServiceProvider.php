@@ -2,6 +2,7 @@
 
 namespace Akibatech\Crud;
 
+use Akibatech\Crud\Console\CrudControllerMakeCommand;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -19,6 +20,10 @@ class CrudServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole())
         {
+            $this->commands([
+                CrudControllerMakeCommand::class
+            ]);
+
             $this->publishes([
                 __DIR__ . '/../resources/lang/' => resource_path('lang/vendor/crud'),
             ], 'crud');
