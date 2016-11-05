@@ -11,7 +11,6 @@ At this stage it's a proof of concept and the package is not fully working...
 - [Validating](#validating)
 - [Fields](#fields)
 - [Customizing](#customizing)
-- [Screenshots](#screenshots)
 - [Tests](#tests)
 - [Contribute](#contribute)
 
@@ -109,6 +108,8 @@ App\Post::crudRoutes(); // Will generate routes for your Eloquent CRUD
 
 ### The table
 
+![Entry table](https://github.com/AkibaTech/laravel-crudable/blob/master/resources/screenshot-table.png)
+
 You can scaffold the CRUD table in many ways:
 ```php
 // Via helper
@@ -130,6 +131,8 @@ Once the table instance in hands, it can be displayed like this:
 ```
 
 ### The entry
+
+![Entry form](https://github.com/AkibaTech/laravel-crudable/blob/master/resources/screenshot-create.png)
 
 You can scaffold the CRUD entry in many ways:
 ```php
@@ -241,21 +244,6 @@ Ex: `fields/text.blade.php` for the `TextField`.
 - `$error` Validation error for the field 
 - `$old` Old value for the field 
 - and more...
-
-## Screenshots
-
-Here's some screenshots of the current example (with the default Bootstrap configuration).
-
-Entry table:
-![Entry table](https://github.com/AkibaTech/laravel-crudable/blob/master/resources/screenshot-table.png)
-
-Entry create form:
-![Entry form](https://github.com/AkibaTech/laravel-crudable/blob/master/resources/screenshot-create.png)
-
-Entry edit form:
-![Entry form](https://github.com/AkibaTech/laravel-crudable/blob/master/resources/screenshot-edit.png)
-
-Of course, all of this **can be easily customized**!
 
 ## Tests
 
