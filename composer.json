@@ -27,7 +27,7 @@
             "tests/AbstractTestCase.php"
         ],
         "psr-4": {
-          "TestModel\\": "tests/Models/"
+          "TestModel\\": "tests/Fixtures/Models/"
         }
     },
     "config": {

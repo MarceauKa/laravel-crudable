@@ -3,6 +3,7 @@
 namespace Akibatech\Crud\Fields;
 
 use Akibatech\Crud\Services\CrudFields;
+use Illuminate\View\View;
 
 /**
  * Class Field
@@ -173,14 +174,55 @@ abstract class Field
     }
 
     /**
-     * Returns the field's form.
+     * Render the field form.
      *
      * @param   void
      * @return  string
      */
     public function form()
     {
-        $view = view()->make($this->getViewName())->with([
+        return $this->getForm()->render();
+    }
+
+    /**
+     * Get the form view.
+     *
+     * @param   void
+     * @return  View
+     */
+    protected function getForm()
+    {
+        return view()->make($this->getViewName())->with($this->getViewBaseVariables());
+    }
+
+    /**
+     * Get the field view name.
+     *
+     * @param   void
+     * @return  string
+     */
+    abstract public function getViewName();
+
+    /**
+     * Returns additionnal variables to the views.
+     *
+     * @param   void
+     * @return  array
+     */
+    protected function getViewVariables()
+    {
+        return [];
+    }
+
+    /**
+     * Returns all base variables for the view.
+     *
+     * @param   void
+     * @return  array
+     */
+    protected function getViewBaseVariables()
+    {
+        $base_variables = [
             'field'       => $this,
             'has_error'   => $this->hasError(),
             'error'       => $this->getError(),
@@ -192,18 +234,10 @@ abstract class Field
             'name'        => $this->identifier,
             'id'          => 'field-' . $this->identifier,
             'value'       => $this->getValue()
-        ]);
+        ];
 
-        return $view->render();
+        return array_merge($base_variables, $this->getViewVariables());
     }
-
-    /**
-     * Get the field view name.
-     *
-     * @param   void
-     * @return  string
-     */
-    abstract public function getViewName();
 
     /**
      * Checks if the field has an error.

@@ -50,7 +50,7 @@ abstract class AbstractTestCase extends Illuminate\Foundation\Testing\TestCase
         $fileSystem = new \Illuminate\Filesystem\Filesystem();
         $classFinder = new \Illuminate\Filesystem\ClassFinder();
 
-        foreach($fileSystem->files(__DIR__ . '/Migrations') as $file)
+        foreach($fileSystem->files(__DIR__ . '/Fixtures/Migrations') as $file)
         {
             $fileSystem->requireOnce($file);
             $migrationClass = $classFinder->findClass($file);

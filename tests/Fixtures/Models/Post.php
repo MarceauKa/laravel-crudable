@@ -2,6 +2,7 @@
 
 namespace TestModel;
 
+use Akibatech\Crud\Fields\RadioField;
 use Akibatech\Crud\Fields\TextareaField;
 use Akibatech\Crud\Fields\TextField;
 use Akibatech\Crud\Services\CrudFields;
@@ -18,7 +19,8 @@ class Post extends Model
         return CrudFields::make([
             TextField::handle('title', 'required|min:3')->withPlaceholder('Title of the post'),
             TextareaField::handle('introduction', 'required|min:3')->withPlaceholder('Short introduction to the post'),
-            TextareaField::handle('content', 'required|min:3')->withPlaceholder('Your content !')->withHelp('Markdown supported!')
+            TextareaField::handle('content', 'required|min:3')->withPlaceholder('Your content !')->withHelp('Markdown supported!'),
+            RadioField::handle('status', 'required')->withOptions([0 => 'Draft', 1 => 'Live'])
         ]);
     }
 

@@ -25,8 +25,11 @@ class Crud
         {
             return new CrudTable(new $crudable);
         }
-
-        if (is_object($crudable) && array_key_exists(Crudable::class, class_uses($crudable)))
+        else if ($crudable instanceof CrudTable)
+        {
+            return $crudable;
+        }
+        else if (is_object($crudable) && array_key_exists(Crudable::class, class_uses($crudable)))
         {
             return new CrudTable($crudable);
         }
@@ -44,6 +47,10 @@ class Crud
         if (is_string($crudable))
         {
             return new CrudEntry(new $crudable);
+        }
+        else if ($crudable instanceof CrudEntry)
+        {
+            return $crudable;
         }
         else if (is_object($crudable) && array_key_exists(Crudable::class, class_uses($crudable)))
         {

@@ -59,7 +59,8 @@ class CrudValidatorTest extends AbstractTestCase
         $validator = $this->model->crudEntry()->validate([
             'title' => 'My title',
             'introduction' => 'My introduction',
-            'content' => 'My content'
+            'content' => 'My content',
+            'status' => 0
         ]);
 
         $this->assertTrue($validator->passes());
@@ -89,7 +90,8 @@ class CrudValidatorTest extends AbstractTestCase
         $this->model->crudEntry()->validate([
             'title' => 'My title',
             'introduction' => 'My introduction',
-            'content' => 'My content'
+            'content' => 'My content',
+            'status' => 1
         ])->save();
 
         $this->assertEquals('My title', $this->model->crudEntry()->getFields()->get('title')->getValue());

@@ -73,7 +73,7 @@ class CrudTable
     {
         $class = $this->class;
 
-        $this->paginator = $class::paginate($this->manager->getPerPage());
+        $this->paginator = $class::latest()->paginate($this->manager->getPerPage());
         $this->entries = $this->paginator->getCollection();
 
         return $this;

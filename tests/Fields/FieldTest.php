@@ -19,7 +19,7 @@ class FieldTest extends AbstractTestCase
     /**
      * @var \Akibatech\Crud\Fields\TextField
      */
-    protected $title;
+    protected $field;
 
     /**
      * @param   void
@@ -31,7 +31,7 @@ class FieldTest extends AbstractTestCase
 
         $this->model = new \TestModel\Post();
         $this->entry = $this->model->crudEntry();
-        $this->title = $this->entry->getFields()->get('title');
+        $this->field = $this->entry->getFields()->get('title');
     }
 
     /**
@@ -39,7 +39,7 @@ class FieldTest extends AbstractTestCase
      */
     public function field_returns_its_identifier()
     {
-        $this->assertEquals('title', $this->title->getIdentifier());
+        $this->assertEquals('title', $this->field->getIdentifier());
     }
 
     /**
@@ -47,9 +47,9 @@ class FieldTest extends AbstractTestCase
      */
     public function field_returns_its_label()
     {
-        $this->assertEquals('Title', $this->title->getLabel());
-        $this->title->withLabel('My label');
-        $this->assertEquals('My label', $this->title->getLabel());
+        $this->assertEquals('Title', $this->field->getLabel());
+        $this->field->withLabel('My label');
+        $this->assertEquals('My label', $this->field->getLabel());
     }
 
     /**
@@ -57,9 +57,9 @@ class FieldTest extends AbstractTestCase
      */
     public function field_returns_its_placeholder()
     {
-        $this->assertEquals('Title of the post', $this->title->getPlaceholder());
-        $this->title->withPlaceholder('Foo');
-        $this->assertEquals('Foo', $this->title->getPlaceholder());
+        $this->assertEquals('Title of the post', $this->field->getPlaceholder());
+        $this->field->withPlaceholder('Foo');
+        $this->assertEquals('Foo', $this->field->getPlaceholder());
     }
 
     /**
@@ -67,9 +67,9 @@ class FieldTest extends AbstractTestCase
      */
     public function field_returns_its_help()
     {
-        $this->assertNull($this->title->getHelp());
-        $this->title->withHelp('This is the help');
-        $this->assertEquals('This is the help', $this->title->getHelp());
+        $this->assertNull($this->field->getHelp());
+        $this->field->withHelp('This is the help');
+        $this->assertEquals('This is the help', $this->field->getHelp());
     }
 
     /**
@@ -77,8 +77,8 @@ class FieldTest extends AbstractTestCase
      */
     public function field_returns_its_forms()
     {
-        $this->title->withLabel('Foo label')->withHelp('Foo help')->withPlaceholder('Strange placeholder');
-        $form = $this->title->form();
+        $this->field->withLabel('Foo label')->withHelp('Foo help')->withPlaceholder('Strange placeholder');
+        $form = $this->field->form();
 
         $this->assertContains('Foo label', $form);
         $this->assertContains('Foo help', $form);

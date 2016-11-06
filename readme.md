@@ -162,7 +162,7 @@ Learn more: [Routes and controlllers](docs/routes_and_controllers.md)
 
 Fields are the way to bind your **model attributes** to **powerful behaviors** and **reusable view components**.  
 
-At this stage, you can use `TextField` and `TextareaField`, but many are planned such as `CheckboxField`, `RadioField`, `NumberField`, `FileField`, `GoogleMapField`, `MarkdownField` and many others...
+At this stage, you can use `TextField`, `TextareaField` and `RadioField`, but many are planned such as `CheckboxField`, `NumberField`, `FileField`, `GoogleMapField`, `MarkdownField` and many others...
 
 Lean more: [Fields](docs/fields.md)
 
