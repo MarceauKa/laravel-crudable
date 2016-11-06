@@ -97,7 +97,7 @@ In your controller:
     {
         $model = App\Post::class;
         
-        return view('you-view', compact($model));
+        return view('your-view', compact($model));
     }
 ```
 
@@ -118,7 +118,7 @@ In your controller:
     {
         $model = App\Post::class;
         
-        return view('you-view', compact($model));
+        return view('your-view', compact($model));
     }
     
     public function store(Request $request)
