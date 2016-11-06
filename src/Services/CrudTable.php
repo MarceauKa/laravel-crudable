@@ -3,6 +3,7 @@
 namespace Akibatech\Crud\Services;
 
 use Akibatech\Crud\Traits\Crudable;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 
@@ -27,6 +28,11 @@ class CrudTable
      * @var Collection
      */
     protected $entries;
+
+    /**
+     * @var LengthAwarePaginator
+     */
+    protected $paginator;
 
     /**
      * @var string
@@ -66,8 +72,9 @@ class CrudTable
     protected function hydrateEntries()
     {
         $class = $this->class;
-        $entries = $class::paginate($this->manager->getPerPage());
-        $this->entries = $entries->getCollection();
+
+        $this->paginator = $class::paginate($this->manager->getPerPage());
+        $this->entries = $this->paginator->getCollection();
 
         return $this;
     }
@@ -90,8 +97,9 @@ class CrudTable
         $view = View::make('crud::table')->with([
             'create_url' => $this->manager->getActionRoute('create'),
             'title'      => trans('crud::table.title', ['name' => $this->manager->getPluralizedName()]),
-            'count'      => $this->entries->count(),
-            'is_empty'   => $this->entries->isEmpty(),
+            'count'      => $this->paginator->total(),
+            'is_empty'   => $this->paginator->total() === 0,
+            'pagination' => $this->paginator,
             'entries'    => $this->entries->all(),
             'columns'    => $this->fields->columns()
         ]);

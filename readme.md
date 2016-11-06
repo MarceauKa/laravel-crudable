@@ -106,6 +106,8 @@ In your view:
 @crudtable($model)
 ```
 
+
+
 Learn more: [The Table](docs/the_table.md)
 
 ![Entry table](https://github.com/AkibaTech/laravel-crudable/blob/master/resources/screenshot-table.png)
