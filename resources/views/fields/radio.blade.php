@@ -8,10 +8,6 @@
         </label>
     </div>
     @endforeach
-    @if($help)
-    <p class="help-block">{{ $help }}</p>
-    @endif
-    @if($has_error)
-    <p class="help-block">{{ $error }}</p>
-    @endif
+    @include('crud::fields.partials.help')
+    @include('crud::fields.partials.errors')
 </div>
