@@ -64,11 +64,11 @@ class Post extends Model
         return CrudFields::make([
             // Bind the title model attribute to a TextField, 
             // with validations rules and a custom placeholder
-            TextField::handle('title', 'required|min:3')
-                ->withPlaceholder('The title of the post'),
+            TextField::handle('title', 'required|min:3')->withPlaceholder('The title of the post'),
+            
             // Bind the introduction model attribute to a TextareaField
-            TextareaField::handle('introduction', 'required|min:3')
-                ->withPlaceholder('Short introduction to the post'),
+            TextareaField::handle('introduction', 'required|min:3')->withPlaceholder('Short introduction to the post'),
+            
             // Bind the content model attribute to a TextareaField
             TextareaField::handle('content', 'required|min:3')
                 ->withPlaceholder('Your content !')
@@ -131,7 +131,7 @@ In your controller:
             $validation->save();
         }
         
-        // Redirect to the form with the errors if validation fails, or to to the index page  
+        // Redirect to the form with the errors if validation fails, or to the index page  
         return $validation->redirect();
     }
 ```
@@ -184,7 +184,7 @@ public function getCrudManager()
 }
 ```
 
-Now, register routes as we have seen in [Routes](#routes) section.
+Then, change the view called for the table and the entry to your needs, and finally, register routes as we have seen in [Routes](#routes) section.
 
 Learn more: [Routes and controlllers](docs/routes_and_controllers.md)
 
