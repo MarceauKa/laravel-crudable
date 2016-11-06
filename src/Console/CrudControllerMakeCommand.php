@@ -5,7 +5,6 @@ namespace Akibatech\Crud\Console;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 
 class CrudControllerMakeCommand extends GeneratorCommand
 {
