@@ -3,6 +3,7 @@
 namespace Akibatech\Crud;
 
 use Akibatech\Crud\Console\CrudControllerMakeCommand;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -44,11 +45,13 @@ class CrudServiceProvider extends ServiceProvider
             $this->loadTranslationsFrom(resource_path('lang/vendor/crud'), 'crud');
         }
 
-        $this->app->bind('Akibatech\Crud\Crud', Crud::class);
-        $this->app->alias('Akibatech\Crud\Crud', 'crud');
+        Blade::directive('crudtable', function($expression) {
+            return "<?php echo crud_table($expression); ?>";
+        });
 
-        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('Crud', 'Akibatech\Crud\CrudFacade');
+        Blade::directive('crudentry', function($expression) {
+            return "<?php echo crud_entry($expression); ?>";
+        });
     }
 
     /**
@@ -57,6 +60,10 @@ class CrudServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind('Akibatech\Crud\Crud', Crud::class);
+        $this->app->alias('Akibatech\Crud\Crud', 'crud');
 
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Crud', 'Akibatech\Crud\CrudFacade');
     }
 }

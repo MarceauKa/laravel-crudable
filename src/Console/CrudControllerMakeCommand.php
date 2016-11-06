@@ -29,7 +29,7 @@ class CrudControllerMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__.'/stubs/controller.stub';
+        return __DIR__ . '/stubs/controller.stub';
     }
 
     /**
@@ -38,7 +38,7 @@ class CrudControllerMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Http\Controllers';
+        return $rootNamespace . '\Http\Controllers';
     }
 
     /**
