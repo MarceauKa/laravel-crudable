@@ -10,6 +10,11 @@ namespace Akibatech\Crud\Fields;
 class EmailField extends Field
 {
     /**
+     * @var string
+     */
+    const TYPE = 'email';
+
+    /**
      * EmailField constructor.
      *
      * {@inheritdoc}

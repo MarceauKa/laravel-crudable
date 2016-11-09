@@ -177,6 +177,38 @@ class CrudFields
     }
 
     /**
+     * @param   void
+     * @return  array
+     */
+    public function getFieldsScripts()
+    {
+        $scripts = [];
+
+        foreach ($this->fields as $field)
+        {
+            $scripts = array_merge($scripts, $field->getScripts());
+        }
+
+        return $scripts;
+    }
+
+    /**
+     * @param   void
+     * @return  array
+     */
+    public function getFieldsCss()
+    {
+        $css = [];
+
+        foreach ($this->fields as $field)
+        {
+            $css = array_merge($css, $field->getCss());
+        }
+
+        return $css;
+    }
+
+    /**
      * Gets fields validation rules.
      *
      * @param   void

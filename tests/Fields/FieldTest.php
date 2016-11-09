@@ -84,4 +84,14 @@ class FieldTest extends AbstractTestCase
         $this->assertContains('Foo help', $form);
         $this->assertContains('Strange placeholder', $form);
     }
+
+    /**
+     * @test
+     */
+    public function field_returns_its_assets()
+    {
+        $this->field = $this->entry->getFields()->get('content');
+
+        $this->assertContains('tinymce.init', $this->field->form());
+    }
 }

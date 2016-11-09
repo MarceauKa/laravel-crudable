@@ -119,75 +119,6 @@ class CrudEntry
 
     /**
      * @param   void
-     * @return  string
-     */
-    public function form()
-    {
-        $is_new = !$this->getModel()->exists;
-        $name = $this->getManager()->getName();
-
-        $with = [
-            'back_url' => $this->manager->getActionRoute('index'),
-            'entry'    => $this,
-            'manager'  => $this->manager,
-            'errors'   => $this->fields->getErrors(),
-            'old'      => $this->fields->getOldInput()
-        ];
-
-        if ($is_new)
-        {
-            $view_name = 'crud::form-create';
-            $method = $this->manager->getActionMethod('store');
-
-            $with += [
-                'title'        => trans('crud::form.create_title', ['name' => $name]),
-                'form_url'     => $this->manager->getActionRoute('store'),
-                'form_method'  => $method,
-                'csrf_field'   => csrf_field(),
-                'method_field' => method_field($method),
-            ];
-        }
-        else
-        {
-            $view_name = 'crud::form-update';
-            $method = $this->manager->getActionMethod('update');
-
-            $with += [
-                'title'        => trans('crud::form.update_title', ['name' => $name]),
-                'form_url'     => $this->manager->getActionRoute('update'),
-                'form_method'  => $method,
-                'csrf_field'   => csrf_field(),
-                'method_field' => method_field($method),
-            ];
-        }
-
-        $view = View::make($view_name)->with($with);
-
-        return $view->render();
-    }
-
-    /**
-     * Get the entry's model.
-     *
-     * @param   void
-     * @return  Crudable|Model
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
-     * @param   void
-     * @return  CrudManager
-     */
-    public function getManager()
-    {
-        return $this->manager;
-    }
-
-    /**
-     * @param   void
      * @return  CrudFields
      */
     public function getFields()
@@ -253,5 +184,76 @@ class CrudEntry
     public function __toString()
     {
         return $this->form();
+    }
+
+    /**
+     * @param   void
+     * @return  string
+     */
+    public function form()
+    {
+        $is_new = !$this->getModel()->exists;
+        $name = $this->getManager()->getName();
+
+        $with = [
+            'back_url' => $this->manager->getActionRoute('index'),
+            'entry'    => $this,
+            'manager'  => $this->manager,
+            'errors'   => $this->fields->getErrors(),
+            'old'      => $this->fields->getOldInput(),
+            'crud_js'  => $this->fields->getFieldsScripts(),
+            'crud_css' => $this->fields->getFieldsCss(),
+        ];
+
+        if ($is_new)
+        {
+            $view_name = 'crud::form-create';
+            $method = $this->manager->getActionMethod('store');
+
+            $with += [
+                'title'        => trans('crud::form.create_title', ['name' => $name]),
+                'form_url'     => $this->manager->getActionRoute('store'),
+                'form_method'  => $method,
+                'csrf_field'   => csrf_field(),
+                'method_field' => method_field($method),
+            ];
+        }
+        else
+        {
+            $view_name = 'crud::form-update';
+            $method = $this->manager->getActionMethod('update');
+
+            $with += [
+                'title'        => trans('crud::form.update_title', ['name' => $name]),
+                'form_url'     => $this->manager->getActionRoute('update'),
+                'form_method'  => $method,
+                'csrf_field'   => csrf_field(),
+                'method_field' => method_field($method),
+            ];
+        }
+
+        $view = View::make($view_name)->with($with);
+
+        return $view->render();
+    }
+
+    /**
+     * Get the entry's model.
+     *
+     * @param   void
+     * @return  Crudable|Model
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param   void
+     * @return  CrudManager
+     */
+    public function getManager()
+    {
+        return $this->manager;
     }
 }

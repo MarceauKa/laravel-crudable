@@ -10,6 +10,11 @@ namespace Akibatech\Crud\Fields;
 class TextareaField extends Field
 {
     /**
+     * @var string
+     */
+    const TYPE = 'textarea';
+
+    /**
      * {@inheritdoc}
      */
     public function getViewName()

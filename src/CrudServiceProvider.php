@@ -32,6 +32,10 @@ class CrudServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../resources/views/' => resource_path('views/vendor/crud'),
             ], 'crud');
+
+            $this->publishes([
+                __DIR__ . '/../resources/assets/' => public_path('vendor/crud'),
+            ], 'crud');
         }
 
         if ($this->app->runningUnitTests())

@@ -14,6 +14,11 @@ class RadioField extends Field
     use FieldWithOptions;
 
     /**
+     * @var string
+     */
+    const TYPE = 'radio';
+
+    /**
      * {@inheritdoc}
      */
     public function getViewName()

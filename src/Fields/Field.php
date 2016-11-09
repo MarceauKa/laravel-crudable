@@ -13,6 +13,11 @@ use Illuminate\View\View;
 abstract class Field
 {
     /**
+     * @var string
+     */
+    const TYPE = 'type';
+
+    /**
      * @var CrudFields
      */
     protected $fields;
@@ -349,7 +354,12 @@ abstract class Field
      */
     public function getValue()
     {
-        return $this->fields->getEntry()->getModel()->getAttributeValue($this->identifier);
+        if ($this->fields->getEntry())
+        {
+            return $this->fields->getEntry()->getModel()->getAttributeValue($this->identifier);
+        }
+
+        return null;
     }
 
     /**
@@ -383,5 +393,29 @@ abstract class Field
     public function getRules()
     {
         return $this->rules;
+    }
+
+    /**
+     * Return fields specific scripts files from public folder.
+     * Example: ['js/field.js']
+     *
+     * @param   void
+     * @return  array
+     */
+    public function getScripts()
+    {
+        return [];
+    }
+
+    /**
+     * Return fields specific stylesheets files from public folder.
+     * Example: ['css/field.css']
+     *
+     * @param   void
+     * @return  array
+     */
+    public function getCss()
+    {
+        return [];
     }
 }
