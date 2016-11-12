@@ -3,6 +3,7 @@
 namespace Akibatech\Crud\Fields;
 
 use Akibatech\Crud\Services\CrudFields;
+use Akibatech\Crud\Traits\FieldHasUiModifiers;
 use Illuminate\View\View;
 
 /**
@@ -12,6 +13,8 @@ use Illuminate\View\View;
  */
 abstract class Field
 {
+    use FieldHasUiModifiers;
+
     /**
      * @var string
      */
@@ -26,16 +29,6 @@ abstract class Field
      * @var string
      */
     protected $identifier;
-
-    /**
-     * @var string
-     */
-    protected $label;
-
-    /**
-     * @var string
-     */
-    protected $placeholder;
 
     /**
      * @var array
@@ -140,45 +133,6 @@ abstract class Field
     }
 
     /**
-     * Set a custom label for the field.
-     *
-     * @param   string $name
-     * @return  self
-     */
-    public function withLabel($name)
-    {
-        $this->label = $name;
-
-        return $this;
-    }
-
-    /**
-     * Defines a placeholder for the field.
-     *
-     * @param   string $placeholder
-     * @return  self
-     */
-    public function withPlaceholder($placeholder)
-    {
-        $this->placeholder = $placeholder;
-
-        return $this;
-    }
-
-    /**
-     * Appends an help message to the input.
-     *
-     * @param   string $help
-     * @return  self
-     */
-    public function withHelp($help)
-    {
-        $this->help = $help;
-
-        return $this;
-    }
-
-    /**
      * Render the field form.
      *
      * @param   void
@@ -272,38 +226,6 @@ abstract class Field
     }
 
     /**
-     * Returns the field's placeholder.
-     *
-     * @param   void
-     * @return  string
-     */
-    public function getPlaceholder()
-    {
-        if (empty($this->placeholder))
-        {
-            return null;
-        }
-
-        return $this->placeholder;
-    }
-
-    /**
-     * Returns the field's help.
-     *
-     * @param   void
-     * @return  string
-     */
-    public function getHelp()
-    {
-        if (empty($this->help))
-        {
-            return null;
-        }
-
-        return $this->help;
-    }
-
-    /**
      * Checks if the field has a previous value.
      *
      * @param   void
@@ -328,22 +250,6 @@ abstract class Field
         }
 
         return null;
-    }
-
-    /**
-     * Returns the field's label.
-     *
-     * @param   void
-     * @return  string
-     */
-    public function getLabel()
-    {
-        if (empty($this->label))
-        {
-            return title_case($this->identifier);
-        }
-
-        return $this->label;
     }
 
     /**
@@ -393,29 +299,5 @@ abstract class Field
     public function getRules()
     {
         return $this->rules;
-    }
-
-    /**
-     * Return fields specific scripts files from public folder.
-     * Example: ['js/field.js']
-     *
-     * @param   void
-     * @return  array
-     */
-    public function getScripts()
-    {
-        return [];
-    }
-
-    /**
-     * Return fields specific stylesheets files from public folder.
-     * Example: ['css/field.css']
-     *
-     * @param   void
-     * @return  array
-     */
-    public function getCss()
-    {
-        return [];
     }
 }
