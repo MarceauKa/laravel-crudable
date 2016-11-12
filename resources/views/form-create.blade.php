@@ -1,6 +1,6 @@
 <h2>{{ $title }}</h2>
 
-<form action="{{ $form_url }}" method="{{ $form_method }}">
+<form action="{{ $form_url }}" method="{{ $form_method }}"{!! $multipart !!}>
     {!! $method_field !!}
     {!! $csrf_field !!}
     @foreach($entry->fields() as $field)

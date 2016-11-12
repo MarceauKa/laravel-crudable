@@ -196,13 +196,14 @@ class CrudEntry
         $name = $this->getManager()->getName();
 
         $with = [
-            'back_url' => $this->manager->getActionRoute('index'),
-            'entry'    => $this,
-            'manager'  => $this->manager,
-            'errors'   => $this->fields->getErrors(),
-            'old'      => $this->fields->getOldInput(),
-            'crud_js'  => $this->fields->getFieldsScripts(),
-            'crud_css' => $this->fields->getFieldsCss(),
+            'back_url'  => $this->manager->getActionRoute('index'),
+            'entry'     => $this,
+            'manager'   => $this->manager,
+            'errors'    => $this->fields->getErrors(),
+            'old'       => $this->fields->getOldInput(),
+            'crud_js'   => $this->fields->getFieldsScripts(),
+            'crud_css'  => $this->fields->getFieldsCss(),
+            'multipart' => $this->fields->getMultipart() ? ' enctype="multipart/form-data"' : ''
         ];
 
         if ($is_new)

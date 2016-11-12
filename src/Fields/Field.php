@@ -21,6 +21,11 @@ abstract class Field
     const TYPE = 'type';
 
     /**
+     * @var bool
+     */
+    const MULTIPART = false;
+
+    /**
      * @var CrudFields
      */
     protected $fields;

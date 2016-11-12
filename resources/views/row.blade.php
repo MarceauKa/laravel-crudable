@@ -1,8 +1,6 @@
 <tr>
     @foreach($entry->fields() as $field)
-    <td>
-        {{ $field->getTableValue() }}
-    </td>
+    <td>{!! $field->getTableValue() !!}</td>
     @endforeach
     <td>
         @foreach($actions as $action)

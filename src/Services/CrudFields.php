@@ -35,6 +35,11 @@ class CrudFields
     protected $old_input;
 
     /**
+     * @var bool
+     */
+    protected $multipart = false;
+
+    /**
      * Make staticly a new instance.
      *
      * @param   array $fields
@@ -287,6 +292,23 @@ class CrudFields
         }
 
         return $this->old_input;
+    }
+
+    /**
+     * @param   void
+     * @return  bool
+     */
+    public function getMultipart()
+    {
+        foreach ($this->fields as $field)
+        {
+            if ($field::MULTIPART === true)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
