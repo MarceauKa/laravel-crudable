@@ -74,7 +74,10 @@ class CrudEntry
     {
         foreach ($this->fields->loop() as $field)
         {
-            yield $field;
+            if ($field->isDisplayedInColumns())
+            {
+                yield $field;
+            }
         }
     }
 

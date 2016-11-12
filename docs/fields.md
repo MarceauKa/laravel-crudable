@@ -42,6 +42,9 @@ Allows you to customize the placeholder displayed on the input form. By default,
 - Customize the help message: `withHelp(string $help)`:  
 Allows you to customize the help message displayed above on the input form. By default, it's empty.
 
+- Display or not in the table: `displayInColumns(bool $state)`:  
+Enable or disable the field on the entries table. Defaults to `true`.
+
 ## Fields reference
 
 ### TextField
@@ -88,6 +91,7 @@ View: `fields/tinymce.blade.php`
 
 File upload field. You can specify extensions authorized, max filesize, upload path and storage disk.  
 Once added this field will add `enctype="multipart/form-data"` to the entry form.  
+By default; this field value is not displayed in the entries table.  
 
 View: `fields/fileupload.blade.php` 
 

@@ -25,6 +25,11 @@ class FileUploadField extends Field
     const MULTIPART = true;
 
     /**
+     * @var bool
+     */
+    protected $columnize = false;
+
+    /**
      * @inheritdoc
      */
     public function getViewName()

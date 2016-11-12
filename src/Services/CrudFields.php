@@ -155,7 +155,10 @@ class CrudFields
     {
         foreach ($this->fields as $field)
         {
-            yield $field->getLabel();
+            if ($field->isDisplayedInColumns())
+            {
+                yield $field->getLabel();
+            }
         }
     }
 

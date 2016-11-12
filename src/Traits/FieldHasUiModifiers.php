@@ -25,6 +25,13 @@ trait FieldHasUiModifiers
     protected $help;
 
     /**
+     * Displayed or not the field in the columns.
+     *
+     * @var bool
+     */
+    protected $columnize = true;
+
+    /**
      * Set a custom label for the field.
      *
      * @param   string $name
@@ -109,6 +116,26 @@ trait FieldHasUiModifiers
         }
 
         return $this->help;
+    }
+
+    /**
+     * @param   bool $state
+     * @return  self
+     */
+    public function displayInColumns($state = true)
+    {
+        $this->columnize = $state;
+
+        return $this;
+    }
+
+    /**
+     * @param   void
+     * @return  bool
+     */
+    public function isDisplayedInColumns()
+    {
+        return $this->columnize === true;
     }
 
     /**
