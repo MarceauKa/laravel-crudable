@@ -57,10 +57,11 @@ class CrudValidatorTest extends AbstractTestCase
     public function passes_valid_data()
     {
         $validator = $this->model->crudEntry()->validate([
-            'title' => 'My title',
+            'title'        => 'My title',
             'introduction' => 'My introduction',
-            'content' => 'My content',
-            'status' => 0
+            'content'      => 'My content',
+            'status'       => 0,
+            'illustration' => $this->getMockedUploadedFile()
         ]);
 
         $this->assertTrue($validator->passes());
@@ -74,7 +75,12 @@ class CrudValidatorTest extends AbstractTestCase
     public function fails_invalid_data()
     {
         $validator = $this->model->crudEntry()->validate([
-            'title' => 'My title',
+            'title'        => 'My title',
+            'introduction' => 'My intro',
+            'content'      => 'My content',
+            'status'       => 1,
+            // Error here
+            'illustration' => $this->getMockedUploadedFile(['guessExtension' => 'pdf'])
         ]);
 
         $this->assertFalse($validator->passes());
@@ -88,13 +94,15 @@ class CrudValidatorTest extends AbstractTestCase
     public function hydrates_fields_on_correct_validation()
     {
         $this->model->crudEntry()->validate([
-            'title' => 'My title',
+            'title'        => 'My title',
             'introduction' => 'My introduction',
-            'content' => 'My content',
-            'status' => 1
+            'content'      => 'My content',
+            'status'       => 1,
+            'illustration' => $this->getMockedUploadedFile()
         ])->save();
 
         $this->assertEquals('My title', $this->model->crudEntry()->getFields()->get('title')->getValue());
+        $this->assertEquals('123.jpeg', $this->model->crudEntry()->getFields()->get('illustration')->getValue());
     }
 
     /**
@@ -107,5 +115,21 @@ class CrudValidatorTest extends AbstractTestCase
         $this->model->crudEntry()->validate([
             'title' => 'My title',
         ])->save();
+    }
+
+    /**
+     * @param   array $options
+     * @return  \Mockery\MockInterface
+     */
+    private function getMockedUploadedFile($options = [])
+    {
+        return Mockery::mock('\Illuminate\Http\UploadedFile',
+            array_merge([
+                'store'          => '123.jpeg',
+                'isValid'        => true,
+                'getPath'        => '/',
+                'guessExtension' => 'jpeg',
+                'getSize'        => 2048
+            ], $options));
     }
 }

@@ -95,6 +95,7 @@ class CrudValidator
         $this->setFormData($fields_data);
 
         $this->validator = Validator::make($fields_data, $rules);
+        $this->validator = $this->getEntry()->getFields()->contextualValidationRules($this->validator);
         $this->validator->fails();
 
         return $this;

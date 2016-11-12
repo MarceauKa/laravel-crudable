@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->string('introduction');
             $table->string('content');
+            $table->string('illustration')->nullable();
             $table->tinyInteger('status')->unsigned()->default(0);
             $table->timestamps();
         });

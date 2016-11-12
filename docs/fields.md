@@ -46,16 +46,26 @@ Allows you to customize the help message displayed above on the input form. By d
 
 ### TextField
 
-It's a basic `<input type="text" />`.
+It's a basic `<input type="text" />`.  
+
+View: `fields/text.blade.php`
 
 ### TextareaField
 
-It's a basic HTML textarea.
+It's a basic HTML textarea.  
+
+View: `fields/textarea.blade.php` 
 
 ### RadioField
 
 Simple HTML radio.  
-This field auto-declare the validation rule `in:...options`.
+
+View: `fields/radio.blade.php` 
+
+Methods: 
+
+- `withOptions(array $options)`  
+When called, `in:...options` validation rule is added.
 
 ```php
 RadioField::handle('status')->withOptions([0 => 'Draft', 1 => 'Live']);
@@ -63,12 +73,37 @@ RadioField::handle('status')->withOptions([0 => 'Draft', 1 => 'Live']);
 
 ### EmailField
 
-Same as [TextField](#textfield) but takes care of the email contained.
+Same as [TextField](#textfield) but takes care of the email contained.  
+
+View: `fields/email.blade.php` 
 
 ### TinymceField
 
 Same as [TextareaField](#textareafield) but produces a WYSIWYG via [TinyMCE 4](https://www.tinymce.com/).  
-To use it you should read [Fields with assets](#fields-with-assets).
+To use it you should read [Fields with assets](#fields-with-assets).  
+
+View: `fields/tinymce.blade.php` 
+
+### FileUploadField
+
+File upload field. You can specify extensions authorized, max filesize, upload path and storage disk.  
+Once added this field will add `enctype="multipart/form-data"` to the entry form.  
+
+View: `fields/fileupload.blade.php` 
+
+Methods: 
+
+- `withTypes(string $types)`  
+It's similar to the laravel validation rule 'mimes' and can be used to restrict the file to the given extensions.
+
+- `withMaxSize(int $size)`  
+It's similar to the laravel validation rule 'max' and can be used to restrict the maximum file size (given in kB).
+
+- `uploadToPath(string $path)`  
+It's the uploaded file destination. Ex: /uploads`.  
+
+- `uploadToDisk(string $disk)`  
+It's the storage disk used for the uploaded file. Defaults to `public`.
 
 ## Fields with assets
 

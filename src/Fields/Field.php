@@ -4,6 +4,7 @@ namespace Akibatech\Crud\Fields;
 
 use Akibatech\Crud\Services\CrudFields;
 use Akibatech\Crud\Traits\FieldHasUiModifiers;
+use Illuminate\Validation\Validator;
 use Illuminate\View\View;
 
 /**
@@ -292,7 +293,10 @@ abstract class Field
      */
     public function newValue($value)
     {
-        $this->fields->getEntry()->getModel()->setAttribute($this->identifier, $value);
+        if ($value != $this->getValue())
+        {
+            $this->fields->getEntry()->getModel()->setAttribute($this->identifier, $value);
+        }
 
         return $this;
     }
@@ -304,5 +308,14 @@ abstract class Field
     public function getRules()
     {
         return $this->rules;
+    }
+
+    /**
+     * @param   Validator $validator
+     * @return  Validator
+     */
+    public function beforeValidation(Validator $validator)
+    {
+        return $validator;
     }
 }

@@ -6,6 +6,7 @@ use Akibatech\Crud\Exceptions\DuplicateFieldIdentifierException;
 use Akibatech\Crud\Exceptions\NoFieldsException;
 use Akibatech\Crud\Fields\Field;
 use Illuminate\Support\MessageBag;
+use Illuminate\Validation\Validator;
 
 /**
  * Class CrudFields
@@ -240,6 +241,20 @@ class CrudFields
         }
 
         return $rules;
+    }
+
+    /**
+     * @param   Validator $validator
+     * @return  Validator
+     */
+    public function contextualValidationRules(Validator $validator)
+    {
+        foreach ($this->fields as &$field)
+        {
+            $validator = $field->beforeValidation($validator);
+        }
+
+        return $validator;
     }
 
     /**

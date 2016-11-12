@@ -1,7 +1,9 @@
 <?php
 
 namespace Akibatech\Crud\Traits;
+
 use Illuminate\Http\UploadedFile;
+use Illuminate\Validation\Validator;
 
 /**
  * Class FieldHandleUpload
@@ -36,7 +38,7 @@ trait FieldHandleUpload
      */
     public function uploadToDisk($disk = 'public')
     {
-        $this->disk =  $disk;
+        $this->disk = $disk;
 
         return $this;
     }
@@ -60,8 +62,6 @@ trait FieldHandleUpload
     {
         $this->mimes = $types;
 
-        $this->addRule('mimes:' . $types);
-
         return $this;
     }
 
@@ -73,8 +73,36 @@ trait FieldHandleUpload
     {
         $this->max_size = $size;
 
-        $this->addRule('max:'.$size);
-
         return $this;
+    }
+
+    /**
+     * @param   Validator $validator
+     * @return  Validator
+     */
+    public function beforeValidation(Validator $validator)
+    {
+        $rules = [];
+        $identifier = $this->getIdentifier();
+
+        if ($this->mimes)
+        {
+            $rules[] = 'mimes:' . $this->mimes;
+        }
+
+        if ($this->max_size)
+        {
+            $rules[] = 'max:' . $this->max_size;
+        }
+
+        if (count($rules) > 0)
+        {
+            $validator->sometimes($this->getIdentifier(), $rules, function ($input) use ($identifier)
+            {
+                return is_null($input->{$identifier}) ? false : true;
+            });
+        }
+
+        return $validator;
     }
 }

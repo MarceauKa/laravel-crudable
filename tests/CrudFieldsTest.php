@@ -7,6 +7,11 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class CrudFieldsTest extends AbstractTestCase
 {
     /**
+     * @var int
+     */
+    protected $expected_fields_count = 5;
+
+    /**
      * @var \TestModel\Post
      */
     protected $model;
@@ -33,7 +38,7 @@ class CrudFieldsTest extends AbstractTestCase
      */
     public function returns_the_number_of_configured_fields()
     {
-        $this->assertEquals(4, $this->fields->count());
+        $this->assertEquals($this->expected_fields_count, $this->fields->count());
     }
 
     /**
@@ -90,7 +95,7 @@ class CrudFieldsTest extends AbstractTestCase
         $fields = $this->fields->get();
 
         $this->assertTrue(is_array($fields));
-        $this->assertEquals(4, count($fields));
+        $this->assertEquals($this->expected_fields_count, count($fields));
     }
 
     /**
@@ -115,7 +120,7 @@ class CrudFieldsTest extends AbstractTestCase
             $fields[] = $field;
         }
 
-        $this->assertEquals(4, count($fields));
+        $this->assertEquals($this->expected_fields_count, count($fields));
     }
 
     /**
