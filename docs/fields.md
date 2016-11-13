@@ -28,7 +28,7 @@ new TextField('your-attribute', 'your-rules')
 
 ### Customizing
 
-One declared, you can use the Field API to declare your modifiers.
+Once declared, you can use the Field API to declare your modifiers.
 
 - Declaring Rules: `withRules(array|string $rules)`:  
 They're your field validation rules and they are the same as Laravel Validation.

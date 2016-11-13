@@ -3,7 +3,7 @@
 <form action="{{ $form_url }}" method="{{ $form_method }}"{!! $multipart !!}>
     {!! $method_field !!}
     {!! $csrf_field !!}
-    @foreach($entry->fields() as $field)
+    @foreach($entry->formFields() as $field)
         {!! $field->form() !!}
     @endforeach
     <hr>

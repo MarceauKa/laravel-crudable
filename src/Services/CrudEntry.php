@@ -82,6 +82,18 @@ class CrudEntry
     }
 
     /**
+     * @param   void
+     * @return  \Generator
+     */
+    public function formFields()
+    {
+        foreach ($this->fields->loop() as $field)
+        {
+            yield $field;
+        }
+    }
+
+    /**
      * Get the entry ID.
      *
      * @param   void

@@ -2,7 +2,7 @@
 
 namespace Akibatech\Crud\Traits;
 
-use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Fluent;
 use Illuminate\Validation\Validator;
 
 /**
@@ -97,7 +97,7 @@ trait FieldHandleUpload
 
         if (count($rules) > 0)
         {
-            $validator->sometimes($this->getIdentifier(), $rules, function ($input) use ($identifier)
+            $validator->sometimes($this->getIdentifier(), $rules, function (Fluent $input) use ($identifier)
             {
                 return is_null($input->{$identifier}) ? false : true;
             });
