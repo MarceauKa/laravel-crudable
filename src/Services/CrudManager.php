@@ -277,7 +277,6 @@ class CrudManager
         Route::group([
             'prefix'     => $this->route_uri_prefix,
             'as'         => $this->route_name_prefix,
-            'namespace'  => 'App\Http\Controllers',
             'middleware' => 'web'
         ], function (Router $router) use ($routes, $controller)
         {
