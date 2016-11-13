@@ -1,6 +1,7 @@
 # Beginner Guide - Step by Step
 
 This guide is for beginners, we'll see the installation process from Laravel 5.3 Installation to our first entry creation.
+It's also available as a [3 minutes video guide](https://youtu.be/Cb8ext3G8E0).
  
 ## Summary
 

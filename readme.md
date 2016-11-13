@@ -6,7 +6,7 @@ Laravel Crudable is a library built to bring **Custom Fields** powered **CRUD fu
 
 ## Summary
 
-A step by step tutorial for beginners is available here: [Beginner Guide](docs/beginner_guide.md).
+A step by step tutorial for beginners is available here: [Beginner Guide](docs/beginner_guide.md) (also available as a 3 min [video](https://youtu.be/Cb8ext3G8E0)).
 
 - [Goals](#goals)
 - [Installation](#installation)
