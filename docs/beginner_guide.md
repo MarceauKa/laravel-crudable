@@ -4,11 +4,12 @@ This guide is for beginners, we'll see the installation process from Laravel 5.3
  
 ## Summary
 
-- 1. [Install Laravel 5.3 and Laravel Crudable](#install-laravel-5-3-and-laravel-crudable)
-- 2. [Our first model and its migration](#our-first-model-and-its-migration)
-- 3. [Configure the fields](#configure-the-fields)
-- 4. [Configure the CRUD](#configure-the-crud)
-- 5. [Configure views](#configure-views)
+1. [Install Laravel 5.3 and Laravel Crudable](#install-laravel-53-and-laravel-crudable)
+2. [Our first model and its migration](#our-first-model-and-its-migration)
+3. [Configure the fields](#configure-the-fields)
+4. [Configure the CRUD](#configure-the-crud)
+5. [Configure views](#configure-views)
+6. [Voilà!](#voilà)
 
 ## Install Laravel 5.3 and Laravel Crudable
 
@@ -21,7 +22,8 @@ cd crud-demo
 ```
 
 Now, we configure database (.env), open `.env` file and replace `DB_CONNECTION=mysql` by `DB_CONNECTION=sqlite`.  
-You can remove all others lines beginning with `DB_*`.
+You can remove all others lines beginning with `DB_*`.  
+
 Then type create the SQLite database.
 
 ```bash
@@ -130,6 +132,7 @@ What we done on our model?
 ## Configure the CRUD
 
 Before continue we need a Controller to handle our CRUD requests.
+
 This package comes with a new `make:crud:controller` artisan command.
 
 ```bash
@@ -171,6 +174,7 @@ App\Post::crudRoutes();
 ## Configure views
 
 Your CRUD is almost ready.  
+
 Before serving your app to an HTTP server (like `artisan serve`), you need to configure 2 views.  
 One for displaying the CRUD table and a second for the form view.  
 
@@ -221,7 +225,8 @@ The layout (based on the Laravel default):
 
 Take care to the `@yield('crud-styles')` and `@yield('crud-scripts')`. You can add them where you want but they're needed.
 
-Finally, you need to configure our generated controller to call our new views. Just replace `your-view` tag and your done!
+Finally, you need to configure our generated controller to call our new views.  
+Just replace `your-view` tag and your done!
 
 ## Voilà!
 
