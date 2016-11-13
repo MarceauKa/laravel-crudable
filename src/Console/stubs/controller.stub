@@ -17,7 +17,7 @@ class DummyClass extends Controller
     {
         $crud = crud_table(DummyModelClass);
 
-        return view('crud::bootstrap3-table', ['crud' => $crud]);
+        return view('crud::scaffold.bootstrap3-table', ['crud' => $crud]);
     }
 
     /**
@@ -30,7 +30,7 @@ class DummyClass extends Controller
     {
         $crud = crud_entry(new DummyModel);
 
-        return view('crud::bootstrap3-form', ['crud' => $crud]);
+        return view('crud::scaffold.bootstrap3-form', ['crud' => $crud]);
     }
 
     /**
@@ -64,7 +64,7 @@ class DummyClass extends Controller
     {
         $crud = crud_entry(DummyModel::findOrFail($id));
 
-        return view('crud::bootstrap3-form', ['crud' => $crud]);
+        return view('crud::scaffold.bootstrap3-form', ['crud' => $crud]);
     }
 
     /**
