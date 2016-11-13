@@ -1,6 +1,7 @@
 <?php
 
 namespace Akibatech\Crud\Traits;
+use Akibatech\Crud\Exceptions\InvalidModelException;
 
 /**
  * Class FieldWithOptions
@@ -15,14 +16,30 @@ trait FieldWithOptions
     protected $options;
 
     /**
+     * @var mixed
+     */
+    protected $default_option = null;
+
+    /**
      * @param   array $options
+     * @param   mixed $default The default value. It's a key from given options.
      * @return  self
      */
-    public function withOptions($options = [])
+    public function withOptions($options = [], $default = null)
     {
         $this->options = $options;
 
-        $this->addRule('in:' . implode(',', array_keys($this->getOptionsKeys())));
+        $this->addRule('in:' . implode(',', $this->getOptionsKeys()));
+
+        if (!is_null($default))
+        {
+            if (!array_key_exists($default, $options))
+            {
+                throw new InvalidModelException("$default option does not exist in given options.");
+            }
+
+            $this->default_option = $default;
+        }
 
         return $this;
     }
@@ -65,10 +82,33 @@ trait FieldWithOptions
 
     /**
      * @param   void
+     * @return  mixed
+     */
+    public function getDefaultOption()
+    {
+        return $this->default_option;
+    }
+
+    /**
+     * @param   void
      * @return  string|null
      */
     public function getTableValue()
     {
         return $this->getOption($this->getValue());
+    }
+
+    /**
+     * @param   void
+     * @return  self
+     */
+    public function beforeSave()
+    {
+        if (is_null($this->getValue()) && !is_null($this->default_option))
+        {
+            $this->newValue($this->default_option);
+        }
+
+        return $this;
     }
 }

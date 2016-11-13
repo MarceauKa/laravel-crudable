@@ -23,7 +23,7 @@ class Post extends Model
             TextareaField::handle('introduction', 'required|min:3')->withPlaceholder('Short introduction to the post'),
             TinymceField::handle('content', 'required|min:3')->withPlaceholder('Your content !'),
             FileUploadField::handle('illustration')->withMaxSize(1024 * 1024)->withTypes('jpeg,png'),
-            RadioField::handle('status', 'required')->withOptions([0 => 'Draft', 1 => 'Live'])
+            RadioField::handle('status', 'required')->withOptions(['draft' => 'Draft', 'live' => 'Live'], 'live')
         ]);
     }
 

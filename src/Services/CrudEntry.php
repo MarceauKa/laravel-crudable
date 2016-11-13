@@ -189,6 +189,11 @@ class CrudEntry
      */
     public function save()
     {
+        foreach ($this->fields->loop() as $field)
+        {
+            $field->beforeSave();
+        }
+
         return $this->model->save();
     }
 

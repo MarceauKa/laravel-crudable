@@ -60,7 +60,7 @@ class CrudValidatorTest extends AbstractTestCase
             'title'        => 'My title',
             'introduction' => 'My introduction',
             'content'      => 'My content',
-            'status'       => 0,
+            'status'       => 'live',
             'illustration' => $this->getMockedUploadedFile()
         ]);
 
@@ -78,7 +78,7 @@ class CrudValidatorTest extends AbstractTestCase
             'title'        => 'My title',
             'introduction' => 'My intro',
             'content'      => 'My content',
-            'status'       => 1,
+            'status'       => 'draft',
             // Error here
             'illustration' => $this->getMockedUploadedFile(['guessExtension' => 'pdf'])
         ]);
@@ -97,7 +97,7 @@ class CrudValidatorTest extends AbstractTestCase
             'title'        => 'My title',
             'introduction' => 'My introduction',
             'content'      => 'My content',
-            'status'       => 1,
+            'status'       => 'draft',
             'illustration' => $this->getMockedUploadedFile()
         ])->save();
 

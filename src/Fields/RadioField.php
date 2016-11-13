@@ -32,7 +32,8 @@ class RadioField extends Field
     public function getViewVariables()
     {
         return [
-            'options' => $this->getOptions(),
+            'options'        => $this->getOptions(),
+            'default_option' => $this->getDefaultOption()
         ];
     }
 }

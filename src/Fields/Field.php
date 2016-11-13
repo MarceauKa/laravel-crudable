@@ -318,4 +318,13 @@ abstract class Field
     {
         return $validator;
     }
+
+    /**
+     * @param   void
+     * @return  self
+     */
+    public function beforeSave()
+    {
+        return $this;
+    }
 }
