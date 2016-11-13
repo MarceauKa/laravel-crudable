@@ -69,7 +69,10 @@ trait Crudable
      * @param   void
      * @return  CrudManager
      */
-    abstract public function getCrudManager();
+    public function getCrudManager()
+    {
+        return CrudManager::make($this);
+    }
 
     /**
      * @param   void

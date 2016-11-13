@@ -8,8 +8,7 @@ This guide is for beginners, we'll see the installation process from Laravel 5.3
 2. [Our first model and its migration](#our-first-model-and-its-migration)
 3. [Configure the fields](#configure-the-fields)
 4. [Configure the CRUD](#configure-the-crud)
-5. [Configure views](#configure-views)
-6. [Voilà!](#voilà)
+5. [Voilà!](#voilà)
 
 ## Install Laravel 5.3 and Laravel Crudable
 
@@ -32,7 +31,7 @@ touch database/database.sqlite
 
 Install laravel-crudable.
 ```bash
-composer require --dev akibatech/laravel-crudable @dev
+composer require akibatech/laravel-crudable
 ```
 
 And add it to your `config/app.php` in the `Application Service Providers` section.
@@ -90,7 +89,6 @@ namespace App;
 
 use Akibatech\Crud\Traits\Crudable;
 use Akibatech\Crud\Services\CrudFields;
-use Akibatech\Crud\Services\CrudManager;
 
 use Akibatech\Crud\Fields\TextField;
 use Akibatech\Crud\Fields\TextareaField;
@@ -141,28 +139,6 @@ php artisan make:crud:controller PostsController App/Post
 
 The first argument is the name of the controller and the second is our model name.
 
-Now, we configure the second part of our Post model. Open it and update it like this:
-
-```php
-public function getCrudManager()
-{
-    return CrudManager::make()
-        ->setController('PostsController')
-        ->setNamePrefix('posts')
-        ->setUriPrefix('posts')
-        ->setPerPage(10)
-        ->setName('Post');
-}
-```
-
-What we done to our Post model?
-
-1. Added the method `getCrudManager` that returns a `CrudManager` instance.
-2. Configured the Controller to be our new `PostsController`.
-3. Configured routes to start with `posts`.
-4. Configured items per page to 10.
-5. And named it `Post`
-
 Please note that the controller creation step is optionnal because you can use your pre-existing controller but it's a good start.
 
 Finally, open your route file located at `routes/web.php` and add:
@@ -170,63 +146,6 @@ Finally, open your route file located at `routes/web.php` and add:
 // ...
 App\Post::crudRoutes();
 ```
-
-## Configure views
-
-Your CRUD is almost ready.  
-
-Before serving your app to an HTTP server (like `artisan serve`), you need to configure 2 views.  
-One for displaying the CRUD table and a second for the form view.  
-
-It's quite simple! You just need a layout (with Bootstrap 3) and 2 views:  
-
-The table view:  
-```blade
-@extends('your-layout')
-
-@section('content')
-    @crudtable('App\Post')
-@endsection
-```
-
-The form view:  
-```blade
-@extends('your-layout')
-
-@section('content')
-    @crudentry($crud)
-@endsection
-```
-
-The layout (based on the Laravel default):  
-```blade
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Laravel</title>
-        <link rel="stylesheet" href="{{ url('css/app.css') }}">
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    @yield('content')
-                </div>
-            </div>
-        </div>
-        @yield('crud-styles')
-        @yield('crud-scripts')
-    </body>
-</html>
-```
-
-Take care to the `@yield('crud-styles')` and `@yield('crud-scripts')`. You can add them where you want but they're needed.
-
-Finally, you need to configure our generated controller to call our new views.  
-Just replace `your-view` tag and your done!
 
 ## Voilà!
 

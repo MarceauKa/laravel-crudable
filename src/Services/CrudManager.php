@@ -91,14 +91,34 @@ class CrudManager
     ];
 
     /**
+     * CrudManager constructor.
+     *
+     * @param   mixed $model
+     */
+    public function __construct($model = null)
+    {
+        if (!is_null($model))
+        {
+            $name = $this->normalizeClassName($model);
+            $pluralized = str_plural($name);
+            $lowered = strtolower($pluralized);
+
+            $this->setController($pluralized . 'Controller')
+                ->setName($name)
+                ->setNamePrefix($lowered)
+                ->setUriPrefix($lowered);
+        }
+    }
+
+    /**
      * Make staticly a new instance.
      *
      * @param   void
      * @return  CrudManager
      */
-    public static function make()
+    public static function make($model = null)
     {
-        return (new static);
+        return new static($model);
     }
 
     /**
@@ -257,6 +277,7 @@ class CrudManager
         Route::group([
             'prefix'     => $this->route_uri_prefix,
             'as'         => $this->route_name_prefix,
+            'namespace'  => 'App\Http\Controllers',
             'middleware' => 'web'
         ], function (Router $router) use ($routes, $controller)
         {
@@ -312,5 +333,17 @@ class CrudManager
     public function getPerPage()
     {
         return $this->per_page;
+    }
+
+    /**
+     * @param   mixed $model
+     * @return  string
+     */
+    protected function normalizeClassName($model)
+    {
+        $class = is_string($model) ? $model : get_class($model);
+        $name = stripos($class, '\\') !== false ? substr(strrchr($class, '\\'), 1) : $class;
+
+        return $name;
     }
 }

@@ -12,6 +12,7 @@ A step by step tutorial for beginners is available here: [Beginner Guide](docs/b
 - [Installation](#installation)
 - [Usage](#usage)
 - [Fields](#fields)
+- [Controller and routes](#controller-and-routes)
 - [Customizing](#customizing)
 - [Tests](#tests)
 - [Contribute](#contribute)
@@ -34,7 +35,7 @@ A step by step tutorial for beginners is available here: [Beginner Guide](docs/b
 
 Install via composer:
 ```bash
-composer require --dev akibatech/laravel-crudable @dev
+composer require akibatech/laravel-crudable
 ```
 
 Then register the service provider in your `config/app.php`.
@@ -52,7 +53,7 @@ This command will publish language files and views for easy customization.
 
 ## Usage
 
-Add the trait `Crudable` to your Eloquent Model, then implement the two required methods `getCrudFields` and `getCrudManager`.  
+Add the trait `Crudable` to your Eloquent Model, then implement the required method `getCrudFields` and `getCrudManager`.  
 
 Example model:
 ```php
@@ -66,29 +67,21 @@ class Post extends Model
     public function getCrudFields()
     {
         return CrudFields::make([
-            // Bind the title model attribute to a TextField, 
-            // with validations rules and a custom placeholder
-            TextField::handle('title', 'required|min:3')->withPlaceholder('The title of the post'),
+            // Bind the title attribute to a required Text Field.
+            TextField::handle('title', 'required|min:3')->withPlaceholder('Title of the post'),
             
-            // Bind the introduction model attribute to a TextareaField
-            TextareaField::handle('introduction', 'required|min:3')->withPlaceholder('Short introduction to the post'),
+            // Bind the introduction attribute to a required Textarea Field.
+            TextareaField::handle('introduction', 'required|min:3')->withPlaceholder('Short introduction'),
             
-            // Bind the content model attribute to a TextareaField
-            TextareaField::handle('content', 'required|min:3')
-                ->withPlaceholder('Your content !')
-                ->withHelp('My custom help')
+            // Bind the content attribute to a Tinymce Field
+            TinymceField::handle('content', 'required'),
+            
+            // Bind the illustration attribute to a file upload allowing 10Mb JPG or PNG picture
+            FileUploadField::handle('illustration')->withMaxSize(1024 * 1024)->withTypes('jpeg,png'),
+            
+            // Bind the status attribute to a Radio Field allowing Draft or Live options.
+            RadioField::handle('status', 'required')->withOptions([0 => 'Draft', 1 => 'Live'])
         ]);
-    }
-    
-    /**
-     * @return \Akibatech\Crud\Services\CrudManager
-     */
-    public function getCrudManager()
-    {
-        return CrudManager::make()
-            ->setNamePrefix('posts') // All routes names begin with 'posts.'
-            ->setUriPrefix('crud/posts') // All routes uris begin with 'crud/posts'
-            ->setName('Post'); // Set the name of our model to be "Post"
     }
 }
 ```
@@ -151,46 +144,26 @@ Learn more: [The Entry](docs/the_entry.md)
 
 ![Entry form](https://github.com/AkibaTech/laravel-crudable/blob/master/resources/screenshot-create.png)
 
-### Routes
-
-If you don't have a controller with its own routes, you can scaffold them.
-
-```php
-// For example, in AppServiceProvider.php
-App\Post::crudRoutes(); // Will generate routes for your Eloquent CRUD
-```
-
-Learn more: [Routes and controlllers](docs/routes_and_controllers.md)
-
 ## Fields
 
 Fields are the way to bind your **model attributes** to **powerful behaviors** and **reusable view components**.  
 
-At this stage, you can use `TextField`, `TextareaField`, `RadioField`, `EmailField`, `TinymceField` and `FileUploadField`, but many are planned such as `CheckboxField`, `NumberField`, `FileField`, `GoogleMapField`, `MarkdownField` and many others...
+At this stage, you can use `TextField`, `TextareaField`, `RadioField`, `EmailField`, `TinymceField` and `FileUploadField`, but many others are planned.
 
 Lean more: [Fields](docs/fields.md)
 
-## Controller
+## Controller and routes
 
-On a new project, it's handlful to scaffold your CRUD controller who is responsible of our requests and validation.
+By default each crudded model needs a Controller. You can scaffold it with the command `make:crud:controller <controller-name> <model-name>`.  
+Ex: `artisan make:crud:controller PostsController Post`.
 
-You can generate it with a new command `make:crud:controller`. Just pass to it a controller name and the name of your model.
+This command will generate a CRUD ready controller for your model with some scaffolded views but it's up to you to customize them.
 
-```bash
-artisan make:crud:controller PostsController Post
-```
-
-Then register the new controller to your model configuration:
+Once generated, your need to register routes like this:
 ```php
-public function getCrudManager()
-{
-    return CrudManager::make()
-            // ...
-            ->setController('PostsController');
-}
+// routes/web.php
+App\Post::crudRoutes();
 ```
-
-Then, change the view called for the table and the entry to your needs, and finally, register routes as we have seen in [Routes](#routes) section.
 
 Learn more: [Routes and controlllers](docs/routes_and_controllers.md)
 
