@@ -4,6 +4,10 @@
 
 Laravel Crudable is a library built to bring **Custom Fields** powered **CRUD functionnalities** to **your Eloquent models**.  
 
+## Summary
+
+A step by step tutorial for beginners is available here: [Beginner Guide](doc/beginner_guide.md).
+
 - [Goals](#goals)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -30,7 +34,7 @@ Laravel Crudable is a library built to bring **Custom Fields** powered **CRUD fu
 
 Install via composer:
 ```bash
-composer require akibatech/laravel-crudable --dev
+composer require --dev akibatech/laravel-crudable @dev
 ```
 
 Then register the service provider in your `config/app.php`.
@@ -182,7 +186,7 @@ public function getCrudManager()
 {
     return CrudManager::make()
             // ...
-            ->setController(PostsController);
+            ->setController('PostsController');
 }
 ```
 
