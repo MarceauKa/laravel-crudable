@@ -1,4 +1,4 @@
-<h2>{{ $title }}</h2>
+<h1>{{ $title }}</h1>
 
 <form action="{{ $form_url }}" method="{{ $form_method }}"{!! $multipart !!}>
     {!! $method_field !!}
