@@ -53,7 +53,7 @@ This command will publish language files and views for easy customization.
 
 ## Usage
 
-Add the trait `Crudable` to your Eloquent Model, then implement the required method `getCrudFields` and `getCrudManager`.  
+Add the trait `Crudable` to your Eloquent Model, then implement the required method `getCrudFields`  
 
 Example model:
 ```php
@@ -154,7 +154,9 @@ Lean more: [Fields](docs/fields.md)
 
 ## Controller and routes
 
-By default each crudded model needs a Controller. You can scaffold it with the command `make:crud:controller <controller-name> <model-name>`.  
+By default each crudded model needs a Controller.  
+
+You can scaffold it with the command `make:crud:controller <controller-name> <model-name>`.    
 Ex: `artisan make:crud:controller PostsController Post`.
 
 This command will generate a CRUD ready controller for your model with some scaffolded views but it's up to you to customize them.
