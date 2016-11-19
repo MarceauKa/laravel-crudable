@@ -21,7 +21,7 @@ A step by step tutorial for beginners is available here: [Beginner Guide](docs/b
 
 - Easy to integrate on a **new project**
 - Easy to integrate to an **existing project**
-- Non-intrusive API (just add a trait and 2 methods on your model)
+- Non-intrusive API (just add a trait and one method to your model)
 - Focus on fields
 - Customizable
 - Laravel's way
@@ -103,8 +103,6 @@ In your view:
 @crudtable($model)
 ```
 
-
-
 Learn more: [The Table](docs/the_table.md)
 
 ![Entry table](https://github.com/AkibaTech/laravel-crudable/blob/master/resources/screenshot-table.png)
@@ -148,7 +146,7 @@ Learn more: [The Entry](docs/the_entry.md)
 
 Fields are the way to bind your **model attributes** to **powerful behaviors** and **reusable view components**.  
 
-At this stage, you can use `TextField`, `TextareaField`, `RadioField`, `EmailField`, `TinymceField` and `FileUploadField`, but many others are planned.
+At this stage, you can use `TextField`, `TextareaField`, `RadioField`, `EmailField`, `TinymceField`, `FileUploadField` and `SelectRelationField`, but many others are planned.
 
 Lean more: [Fields](docs/fields.md)
 

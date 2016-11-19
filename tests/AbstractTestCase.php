@@ -57,5 +57,12 @@ abstract class AbstractTestCase extends Illuminate\Foundation\Testing\TestCase
             
             (new $migrationClass)->up();
         }
+
+        DB::table('categories')->truncate();
+        DB::table('categories')->insert([
+            ['name' => 'PHP'],
+            ['name' => 'Javascript'],
+            ['name' => 'Linux'],
+        ]);
     }
 }

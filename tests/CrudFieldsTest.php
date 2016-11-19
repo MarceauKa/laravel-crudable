@@ -9,7 +9,7 @@ class CrudFieldsTest extends AbstractTestCase
     /**
      * @var int
      */
-    protected $expected_fields_count = 5;
+    protected $expected_fields_count = 6;
 
     /**
      * @var \TestModel\Post

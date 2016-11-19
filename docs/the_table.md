@@ -1,8 +1,10 @@
 # The table
 
-**More doc is coming**
+The `CrudTable` object is used to handle a collection of `Crudable` entries.  
 
-You can scaffold the CRUD table in many ways:
+## Usage
+
+Once a Crudable model in hands, you can, scaffold the CRUD table in many ways:
 ```php
 // Via helper
 $crud = crud_table(Model::class); // Or crud_table($model_instance)
@@ -21,3 +23,7 @@ Once the table instance in hands, it can be displayed like this:
 // Or like this from a model instance
 {!! $model->crudTable()->table() !!}
 ```
+
+## API
+
+The `CrudTable` object has for the moment no public API.

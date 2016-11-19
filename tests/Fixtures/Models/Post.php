@@ -4,6 +4,7 @@ namespace TestModel;
 
 use Akibatech\Crud\Fields\FileUploadField;
 use Akibatech\Crud\Fields\RadioField;
+use Akibatech\Crud\Fields\SelectRelationField;
 use Akibatech\Crud\Fields\TextareaField;
 use Akibatech\Crud\Fields\TextField;
 use Akibatech\Crud\Fields\TinymceField;
@@ -23,6 +24,7 @@ class Post extends Model
             TextareaField::handle('introduction', 'required|min:3')->withPlaceholder('Short introduction to the post'),
             TinymceField::handle('content', 'required|min:3')->withPlaceholder('Your content !'),
             FileUploadField::handle('illustration')->withMaxSize(1024 * 1024)->withTypes('jpeg,png'),
+            SelectRelationField::handle('category_id')->withRelation('category')->withLabel('Category'),
             RadioField::handle('status', 'required')->withOptions(['draft' => 'Draft', 'live' => 'Live'], 'live')
         ]);
     }
@@ -33,5 +35,10 @@ class Post extends Model
             ->setNamePrefix('posts')
             ->setUriPrefix('crud/posts')
             ->setName('Post');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

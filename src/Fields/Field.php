@@ -128,6 +128,15 @@ abstract class Field
     }
 
     /**
+     * @param   void
+     * @return  CrudFields
+     */
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
+    /**
      * Get the field identifier.
      *
      * @param   void

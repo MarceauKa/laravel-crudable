@@ -202,12 +202,12 @@ class CrudManager
     }
 
     /**
-     * @param   string $prefix
+     * @param   string $controller
      * @return  self
      */
-    public function setController($prefix)
+    public function setController($controller)
     {
-        $this->controller = $prefix;
+        $this->controller = $controller;
 
         return $this;
     }

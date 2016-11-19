@@ -3,9 +3,9 @@
 Fields are the way to bring power to your model attributes.  
 Many are available and all are customizable to your needs.
 
-## API
+## Usage
 
-Each field can be attached to you model via the `getCrudFields` method on your `Crudable` model.
+Each field can be attached to your model via the `getCrudFields` method on your `Crudable` model.
 And each of them share the same base API and some have their own additionnal API.
 
 ```php
@@ -17,33 +17,19 @@ public function getCrudFields()
 }
 ```
 
-### Attaching
+## Attach fields
 
-The minimum working code is (rules are facultatives):
+The minimum working code is:
 ```php
-TextField::handle('your-attribute', 'your-rules')
+TextField::handle('your-attribute')
 // or
-new TextField('your-attribute', 'your-rules')
+new TextField('your-attribute')
 ```
 
-### Customizing
-
-Once declared, you can use the Field API to declare your modifiers.
-
-- Declaring Rules: `withRules(array|string $rules)`:  
-They're your field validation rules and they are the same as Laravel Validation.
-
-- Customize the label: `withLabel(string $lavel)`:  
-Allows you to customize the label that'll be displayed on the form. By default, if your identifier is `title` it will be displayed `Title`.
-
-- Customize the placeholder: `withPlaceholder(string $placeholder)`:  
-Allows you to customize the placeholder displayed on the input form. By default, it's empty.
-
-- Customize the help message: `withHelp(string $help)`:  
-Allows you to customize the help message displayed above on the input form. By default, it's empty.
-
-- Display or not in the table: `displayInColumns(bool $state)`:  
-Enable or disable the field on the entries table. Defaults to `true`.
+You can pass your rules as second parameter:
+```php
+TextField::handle('your-attribute', 'required|min:3')
+```
 
 ## Fields reference
 
@@ -51,27 +37,33 @@ Enable or disable the field on the entries table. Defaults to `true`.
 
 It's a basic `<input type="text" />`.  
 
-View: `fields/text.blade.php`
+View: `fields/text.blade.php`  
+Extends: `Field`  
+Trait: -  
 
 ### TextareaField
 
 It's a basic HTML textarea.  
 
-View: `fields/textarea.blade.php` 
+View: `fields/textarea.blade.php`  
+Extends: `Field`  
+Trait: -  
 
 ### RadioField
 
 Simple HTML radio.  
 
-View: `fields/radio.blade.php` 
+View: `fields/radio.blade.php`  
+Extends: `Field`  
+Trait: `FieldWithOptions`  
 
-Methods: 
-
-- `withOptions(array $options)`  
-When called, `in:...options` validation rule is added.
-
+Additional API:
 ```php
-RadioField::handle('status')->withOptions([0 => 'Draft', 1 => 'Live']);
+$field = RadioField::handle('status');
+
+// Add radio options as an array. Takes care to add validation rules.
+// The second parameter is the default value but it can be null.
+$field->withOptions([0 => 'Dra`ft', 1 => 'Live'], 1);
 ```
 
 ### EmailField
@@ -79,13 +71,17 @@ RadioField::handle('status')->withOptions([0 => 'Draft', 1 => 'Live']);
 Same as [TextField](#textfield) but takes care of the email contained.  
 
 View: `fields/email.blade.php` 
+Extends: `Field`  
+Trait: -  
 
 ### TinymceField
 
 Same as [TextareaField](#textareafield) but produces a WYSIWYG via [TinyMCE 4](https://www.tinymce.com/).  
-To use it you should read [Fields with assets](#fields-with-assets).  
+To use it you should read [Fields with assets](#publishing-assets).  
 
-View: `fields/tinymce.blade.php` 
+View: `fields/tinymce.blade.php`  
+Extends: `Field`  
+Trait: -  
 
 ### FileUploadField
 
@@ -93,23 +89,81 @@ File upload field. You can specify extensions authorized, max filesize, upload p
 Once added this field will add `enctype="multipart/form-data"` to the entry form.  
 By default; this field value is not displayed in the entries table.  
 
-View: `fields/fileupload.blade.php` 
+View: `fields/fileupload.blade.php`  
+Extends: `Field`  
+Trait: `FieldHandleUpload`  
 
-Methods: 
+Additional API:
+```php
+$field = FileUploadField::handle('illustration');
 
-- `withTypes(string $types)`  
-It's similar to the laravel validation rule 'mimes' and can be used to restrict the file to the given extensions.
+// Only accept this mimes.
+// Default: empty
+$field->withTypes('jpeg,png');  
 
-- `withMaxSize(int $size)`  
-It's similar to the laravel validation rule 'max' and can be used to restrict the maximum file size (given in kB).
+// Set the maximum file size (in kB)
+// Default: empty
+$field->withMaxSize(1024 * 1024);  
 
-- `uploadToPath(string $path)`  
-It's the uploaded file destination. Ex: /uploads`.  
+// Set the upload destination folder on the disk.
+// Default: 'uploads'
+$field->uploadToPath('uploaded-illustrations');
 
-- `uploadToDisk(string $disk)`  
-It's the storage disk used for the uploaded file. Defaults to `public`.
+// Set the disk that'll store uploads. Configure them in "config/filesystems.php".
+// Default: 'public'.
+$field->uploadToDisk('disk-name');
+```
 
-## Fields with assets
+### SelectRelationField
+
+This field adds a select input based on an existing model relation.  
+For example, a Post model belongs to a Category model:  
+```php
+SelectRelationField::handle('category_id')->withRelation('category')
+```
+
+View: `fields/select-relation.blade.php`  
+Extends: `Field`  
+Trait: `FieldWithRelation`  
+
+Additional API:
+```php
+$field = SelectRelationField::handle('category_id');
+
+// The relation to use. The parameter is the name of the relation used in the model.
+// Default: empty
+$field->withRelation('category');  
+```
+
+## Customize fields
+
+Once declared, you can use the Field API to declare your modifiers.
+
+```php
+$field = TextField::handle('title');
+
+// Attach some additional validation rules
+// Default: empty
+$field->withRules('required|min:3');
+
+// Change the displayed label for this tield
+// Default: Capitalized attribute name
+$field->withLabel('The title');
+
+// Set an input pladeholder
+// Default: empty
+$field->withPlaceholder('Ex: Hello world');
+
+// Set a custom help message
+// Default: empty
+$field->withHelp('This is the title of your post');
+
+// Show this field on the entries table ?
+// Default: true
+$field->displayInColumns(true);
+```
+
+## Publishing assets
 
 Some fields such as [TinymceField](#tinymcefield) comes with custom assets.  
 
