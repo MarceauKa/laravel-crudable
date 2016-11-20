@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.3
+
+### Added
+
+- `DatePickerField` with its assets and its tests
+- `getValidator` method on `CrudValidator`
+
 ## 1.0.2
 
 ### Added

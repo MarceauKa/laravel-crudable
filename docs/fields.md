@@ -135,6 +135,34 @@ $field = SelectRelationField::handle('category_id');
 $field->withRelation('category');  
 ```
 
+### DatePickerField
+
+This field provides a date picker (based on [Bootstrap Datepicker](https://github.com/uxsolutions/bootstrap-datepicker).
+
+View: `fields/date-picker.blade.php`  
+Extends: `Field`  
+Trait: -  
+
+Additional API:
+```php
+$field = DatePicker::handle('published_at');
+
+// Customize the date format both used when saving and selecting a date in the picker.
+// Default: 'Y-m-d'
+$field->withDateFormat('Y-m-d');  
+
+// Set a minimum selectable date. You can pass a date as a string or as a Carbon instance.
+// The field will add needed rules to the validation.
+// Default: empty
+$field->withMinDate('2016-12-01');
+$field->withMinDate(Carbon::now());
+
+// Set a maximum selectable date. Same as min date.
+// Default: empty
+$field->withMaxDate('2016-12-01');
+$field->withMaxDate(Carbon::now()->addDays(3));
+```
+
 ## Customize fields
 
 Once declared, you can use the Field API to declare your modifiers.

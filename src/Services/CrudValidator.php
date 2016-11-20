@@ -162,4 +162,13 @@ class CrudValidator
 
         return $this;
     }
+
+    /**
+     * @param   void
+     * @return  Validator
+     */
+    public function getValidator()
+    {
+        return $this->validator;
+    }
 }

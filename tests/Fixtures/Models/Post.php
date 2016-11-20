@@ -2,6 +2,7 @@
 
 namespace TestModel;
 
+use Akibatech\Crud\Fields\DatePickerField;
 use Akibatech\Crud\Fields\FileUploadField;
 use Akibatech\Crud\Fields\RadioField;
 use Akibatech\Crud\Fields\SelectRelationField;
@@ -11,6 +12,7 @@ use Akibatech\Crud\Fields\TinymceField;
 use Akibatech\Crud\Services\CrudFields;
 use Akibatech\Crud\Services\CrudManager;
 use Akibatech\Crud\Traits\Crudable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -25,7 +27,8 @@ class Post extends Model
             TinymceField::handle('content', 'required|min:3')->withPlaceholder('Your content !'),
             FileUploadField::handle('illustration')->withMaxSize(1024 * 1024)->withTypes('jpeg,png'),
             SelectRelationField::handle('category_id')->withRelation('category')->withLabel('Category'),
-            RadioField::handle('status', 'required')->withOptions(['draft' => 'Draft', 'live' => 'Live'], 'live')
+            RadioField::handle('status', 'required')->withOptions(['draft' => 'Draft', 'live' => 'Live'], 'live'),
+            DatePickerField::handle('published_at')->withDateFormat('Y-m-d')->withMinDate(Carbon::now()),
         ]);
     }
 
