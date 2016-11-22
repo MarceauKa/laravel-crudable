@@ -1,7 +1,7 @@
 {
-    "name": "akibatech/laravel-crudable",
-    "description": "Laravel CRUD builder with ease",
-    "keywords": ["laravel", "crud", "fields"],
+    "name": "marceauka/laravel-crudable",
+    "description": "Laravel CRUD builder powered by custom fields",
+    "keywords": ["laravel", "crud", "fields", "admin"],
     "license": "MIT",
     "type": "plugin",
     "require": {
