@@ -35,7 +35,7 @@ A step by step tutorial for beginners is available here: [Beginner Guide](docs/b
 
 Install via composer:
 ```bash
-composer require akibatech/laravel-crudable
+composer require marceauka/laravel-crudable
 ```
 
 Then register the service provider in your `config/app.php`.

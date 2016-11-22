@@ -32,7 +32,7 @@ touch database/database.sqlite
 
 Install laravel-crudable.
 ```bash
-composer require akibatech/laravel-crudable
+composer require marceauka/laravel-crudable
 ```
 
 And add it to your `config/app.php` in the `Application Service Providers` section.
