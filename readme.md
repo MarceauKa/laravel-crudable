@@ -33,6 +33,8 @@ A step by step tutorial for beginners is available here: [Beginner Guide](docs/b
  
 ## Installation
 
+This version is compatible with Laravel **5.4** and **5.3**. For Laravel 5.2 compatibility see the branch **1.0**.
+
 Install via composer:
 ```bash
 composer require marceauka/laravel-crudable
