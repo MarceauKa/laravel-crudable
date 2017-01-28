@@ -24,7 +24,7 @@ abstract class AbstractTestCase extends \Illuminate\Foundation\Testing\TestCase
 
         $app['config']->set('database.default','sqlite');
         $app['config']->set('database.connections.sqlite.database', ':memory:');
-        $dir = __DIR__ . '/Fixtures/';
+        $dir = __DIR__ . '/Fixtures/database/';
         $app->useDatabasePath($dir);
 
         return $app;
