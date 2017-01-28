@@ -1,6 +1,6 @@
 <?php
 
-abstract class AbstractTestCase extends Illuminate\Foundation\Testing\TestCase
+abstract class AbstractTestCase extends \Illuminate\Foundation\Testing\TestCase
 {
     /**
      * The base URL to use while testing the application.
@@ -22,47 +22,19 @@ abstract class AbstractTestCase extends Illuminate\Foundation\Testing\TestCase
 
         $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 
+        $app['config']->set('database.default','sqlite');
+        $app['config']->set('database.connections.sqlite.database', ':memory:');
+        $dir = __DIR__ . '/Fixtures/';
+        $app->useDatabasePath($dir);
+
         return $app;
     }
 
     /**
-     * Setup DB before each test.
-     *
-     * @return void  
+     * @return  void
      */
-    public function setUp()
-    { 
-        parent::setUp();
-
-        $this->app['config']->set('database.default','sqlite'); 
-        $this->app['config']->set('database.connections.sqlite.database', ':memory:');
-
-        $this->migrate();
-    }
-
-    /**
-     * Run package database tests migrations
-     *
-     * @return void
-     */
-    public function migrate()
-    { 
-        $fileSystem = new \Illuminate\Filesystem\Filesystem();
-        $classFinder = new \Illuminate\Filesystem\ClassFinder();
-
-        foreach($fileSystem->files(__DIR__ . '/Fixtures/Migrations') as $file)
-        {
-            $fileSystem->requireOnce($file);
-            $migrationClass = $classFinder->findClass($file);
-            
-            (new $migrationClass)->up();
-        }
-
-        DB::table('categories')->truncate();
-        DB::table('categories')->insert([
-            ['name' => 'PHP'],
-            ['name' => 'Javascript'],
-            ['name' => 'Linux'],
-        ]);
+    public function refreshApplication()
+    {
+        $this->app = $this->createApplication();
     }
 }

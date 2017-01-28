@@ -6,6 +6,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CrudValidatorTest extends AbstractTestCase
 {
+    use DatabaseMigrations;
+    
     /**
      * @var \TestModel\Post
      */

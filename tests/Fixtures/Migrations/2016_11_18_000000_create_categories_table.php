@@ -18,6 +18,12 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
+
+        DB::table('categories')->insert([
+            ['name' => 'PHP'],
+            ['name' => 'Javascript'],
+            ['name' => 'Linux'],
+        ]);
     }
 
     /**

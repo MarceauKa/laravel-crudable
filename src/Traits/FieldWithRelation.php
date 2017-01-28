@@ -4,7 +4,6 @@ namespace Akibatech\Crud\Traits;
 
 use Akibatech\Crud\Exceptions\InvalidRelationException;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Fluent;
 use Illuminate\Validation\Validator;
 
 /**
@@ -78,9 +77,7 @@ trait FieldWithRelation
         $related_table = $related_class->getTable();
         $related_pk = $related_instance->getKeyName();
 
-        $validator->mergeRules($this->getIdentifier(), [
-            "exists:$related_table,$related_pk"
-        ]);
+        $this->mergeRules($validator, "exists:$related_table,$related_pk");
 
         return $validator;
     }

@@ -136,7 +136,7 @@ class DatePickerField extends Field
             $rules[] = 'before:' . $date;
         }
 
-        $validator->mergeRules($this->identifier, $rules);
+        $this->mergeRules($validator, $rules);
 
         return $validator;
     }

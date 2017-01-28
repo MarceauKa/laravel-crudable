@@ -6,6 +6,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CrudTest extends AbstractTestCase
 {
+    use DatabaseMigrations;
+
     /**
      * @test
      * @expectedException \Akibatech\Crud\Exceptions\InvalidArgumentException

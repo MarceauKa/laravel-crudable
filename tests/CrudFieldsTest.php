@@ -6,6 +6,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CrudFieldsTest extends AbstractTestCase
 {
+    use DatabaseMigrations;
+
     /**
      * @var int
      */

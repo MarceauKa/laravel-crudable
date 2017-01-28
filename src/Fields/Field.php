@@ -69,6 +69,33 @@ abstract class Field
         return (new static($idenfitier, $rules));
     }
 
+    /**
+     * Merge rules into a validator.
+     * With Laravel 5.4, Validator has method 'mergeRules' anymore...
+     *
+     * @param   Validator $validator
+     * @param   array|string $rules
+     * @return  self
+     */
+    public function mergeRules(Validator $validator, $rules)
+    {
+        $old_rules = $validator->getRules();
+
+        if (!is_array($rules))
+        {
+            $old_rules[$this->getIdentifier()][] = $rules;
+        }
+        else
+        {
+            foreach ($rules as $rule) {
+                $old_rules[$this->getIdentifier()][] = $rule;
+            }
+        }
+
+        $validator->setRules($old_rules);
+
+        return $this;
+    }
 
     /**
      * Add validation rules to the field.
